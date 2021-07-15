@@ -1,3 +1,5 @@
-console.log("Hello World!");
+import Joi from "joi";
 
-export {};
+const { error } = Joi.string().uppercase().validate("5", { convert: false });
+
+console.log(error);
