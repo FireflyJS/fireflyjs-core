@@ -6,6 +6,10 @@ import { StringSchemaError } from "./types/StringError";
 class StringSchema extends SchemaType {
   private __config: StringSchemaConfig = {};
 
+  public trim = () => {
+    this.__config.trim = true;
+  };
+
   public required = () => {
     this.__config.required = true;
   };
@@ -34,10 +38,17 @@ class StringSchema extends SchemaType {
     this.__config.regex = x;
   };
 
+  public enum = (x: string[]) => {
+    if (x.length > 0) {
+      this.__config.enum = x;
+    }
+  };
+
   get __isRequired() {
     return this.__config.required;
   }
 
+  // TODO:- add enum check
   validate = (
     x: any,
     key: string = "value"

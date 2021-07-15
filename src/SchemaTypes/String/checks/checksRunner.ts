@@ -10,7 +10,7 @@ const checkRunner = (
   config: StringSchemaConfig,
   key: string
 ): StringSchemaError[] => {
-  const { minLength, maxLength, uppercase, lowercase, regex } = config;
+  const { trim, minLength, maxLength, uppercase, lowercase, regex } = config;
   const errors: StringSchemaError[] = [];
 
   if (!check.type(x)) {
@@ -21,9 +21,11 @@ const checkRunner = (
     return errors;
   }
 
+  const str = trim ? x.trim() : x;
+
   // length checks
   if (minLength) {
-    if (!check.minLength(x, minLength)) {
+    if (!check.minLength(str, minLength)) {
       errors.push({
         error: `minimum allowed lenght for ${key} is ${minLength}`,
         errorType: msg.Length,
@@ -31,7 +33,7 @@ const checkRunner = (
     }
   }
   if (maxLength) {
-    if (!check.maxLength(x, maxLength)) {
+    if (!check.maxLength(str, maxLength)) {
       errors.push({
         error: `maximum allowed lenght for ${key} is ${maxLength}`,
         errorType: msg.Length,
@@ -40,32 +42,18 @@ const checkRunner = (
   }
 
   // case checks
-  if (typeof uppercase !== undefined) {
-    const checkResult = check.uppercase(x);
-    if (checkResult === false && uppercase === true) {
+  if (uppercase) {
+    if (!check.uppercase(str)) {
       errors.push({
         error: `${key} must be all uppercase`,
         errorType: msg.Case,
       });
     }
-    if (checkResult === true && uppercase === false) {
-      errors.push({
-        error: `${key} must not be all uppercase`,
-        errorType: msg.Case,
-      });
-    }
   }
-  if (typeof lowercase !== undefined) {
-    const checkResult = check.lowercase(x);
-    if (checkResult === false && lowercase === true) {
+  if (lowercase) {
+    if (!check.lowercase(str)) {
       errors.push({
         error: `${key} must be all lowercase`,
-        errorType: msg.Case,
-      });
-    }
-    if (checkResult === true && lowercase === false) {
-      errors.push({
-        error: `${key} must not be all lowercase`,
         errorType: msg.Case,
       });
     }
@@ -73,7 +61,7 @@ const checkRunner = (
 
   // format check
   if (regex) {
-    if (!check.format(x, regex)) {
+    if (!check.format(str, regex)) {
       const errorMsg = `${key} must be ${
         regex === "email" ? "a valid email" : "of valid format"
       }`;

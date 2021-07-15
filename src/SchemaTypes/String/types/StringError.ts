@@ -6,6 +6,7 @@ enum StringSchemaErrorEnum {
   Length = "String/Length",
   Case = "String/Case",
   Format = "String/Format",
+  Enum = "String/InvalidValue",
 }
 
 type StringSchemaError = BaseError<StringSchemaErrorEnum>;
