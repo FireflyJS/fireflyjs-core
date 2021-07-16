@@ -35,13 +35,13 @@ const checkRunner = (
   // length checks
   if (minLength && !check.minLength(str, minLength)) {
     errors.push({
-      error: `minimum allowed lenght for ${key} is ${minLength}`,
+      error: `minimum allowed length for ${key} is ${minLength}`,
       errorType: msg.Length,
     });
   }
   if (maxLength && !check.maxLength(str, maxLength)) {
     errors.push({
-      error: `maximum allowed lenght for ${key} is ${maxLength}`,
+      error: `maximum allowed length for ${key} is ${maxLength}`,
       errorType: msg.Length,
     });
   }

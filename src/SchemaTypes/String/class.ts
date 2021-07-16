@@ -48,7 +48,6 @@ class StringSchema extends SchemaType {
     return this;
   };
 
-  // TODO:- add enum check
   validate = (
     x: any,
     key: string = "value"
