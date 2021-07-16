@@ -3,23 +3,27 @@ import { NumberSchemaConfig } from "./types/NumberSchema";
 import { NumberSchemaError } from "./types/NumberError";
 import checkRunner from "./checks/checksRunner";
 
-class NumberSchema extends SchemaType {
-  private __config: NumberSchemaConfig = {};
+class NumberSchema extends SchemaType<number> {
+  protected override __config: NumberSchemaConfig = {};
 
-  public integer = () => {
+  public integer = (): this => {
     this.__config.integer = true;
+    return this;
   };
 
-  public min = (x: number) => {
+  public min = (x: number): this => {
     this.__config.min = x;
+    return this;
   };
 
-  public max = (x: number) => {
+  public max = (x: number): this => {
     this.__config.max = x;
+    return this;
   };
 
-  public enum = (x: number[]) => {
+  public enum = (x: number[]): this => {
     this.__config.enum = x;
+    return this;
   };
 
   validate = (
