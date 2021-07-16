@@ -13,6 +13,7 @@ const checkRunner = (
   const { trim, minLength, maxLength, uppercase, lowercase, regex } = config;
   const errors: StringSchemaError[] = [];
 
+  // type check
   if (!check.type(x)) {
     errors.push({
       error: `${key} must be a string`,

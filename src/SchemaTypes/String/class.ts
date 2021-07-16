@@ -4,7 +4,7 @@ import checkRunner from "./checks/checksRunner";
 import { StringSchemaError } from "./types/StringError";
 
 class StringSchema extends SchemaType {
-  private __config: StringSchemaConfig = {};
+  protected override __config: StringSchemaConfig = {};
 
   public trim = () => {
     this.__config.trim = true;
