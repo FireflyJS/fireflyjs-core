@@ -1,9 +1,7 @@
 import SchemaType from "../class";
 import { NumberSchemaConfig } from "./types/NumberSchema";
-import {
-  NumberSchemaError,
-  NumberSchemaErrorEnum as msg,
-} from "./types/NumberError";
+import { NumberSchemaError } from "./types/NumberError";
+import checkRunner from "./checks/checksRunner";
 
 class NumberSchema extends SchemaType {
   private __config: NumberSchemaConfig = {};
@@ -31,14 +29,10 @@ class NumberSchema extends SchemaType {
     valid: boolean;
     errors: NumberSchemaError[];
   } => {
-    const errors = [
-      {
-        error: `${key}${x}`,
-        errorType: msg.Type,
-      },
-    ];
+    const errors = checkRunner(x, this.__config, key);
+
     return {
-      valid: true,
+      valid: Boolean(errors.length === 0),
       errors,
     };
   };
