@@ -8,3 +8,4 @@ export {
   uppercaseCheck as uppercase,
 } from "./caseCheck";
 export { formatCheck as format } from "./formatCheck";
+export { enumCheck as enum } from "./enumCheck";

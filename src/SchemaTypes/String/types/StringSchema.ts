@@ -1,6 +1,6 @@
 import BaseSchemaConfig from "../../types/BaseSchema";
 
-interface StringSchemaConfig extends BaseSchemaConfig {
+interface StringSchemaConfig extends BaseSchemaConfig<string> {
   trim?: true;
   minLength?: number;
   maxLength?: number;

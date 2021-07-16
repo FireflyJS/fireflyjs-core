@@ -10,7 +10,15 @@ const checkRunner = (
   config: StringSchemaConfig,
   key: string
 ): StringSchemaError[] => {
-  const { trim, minLength, maxLength, uppercase, lowercase, regex } = config;
+  const {
+    trim,
+    minLength,
+    maxLength,
+    uppercase,
+    lowercase,
+    regex,
+    enum: cEnum,
+  } = config;
   const errors: StringSchemaError[] = [];
 
   // type check
@@ -25,52 +33,50 @@ const checkRunner = (
   const str = trim ? x.trim() : x;
 
   // length checks
-  if (minLength) {
-    if (!check.minLength(str, minLength)) {
-      errors.push({
-        error: `minimum allowed lenght for ${key} is ${minLength}`,
-        errorType: msg.Length,
-      });
-    }
+  if (minLength && !check.minLength(str, minLength)) {
+    errors.push({
+      error: `minimum allowed lenght for ${key} is ${minLength}`,
+      errorType: msg.Length,
+    });
   }
-  if (maxLength) {
-    if (!check.maxLength(str, maxLength)) {
-      errors.push({
-        error: `maximum allowed lenght for ${key} is ${maxLength}`,
-        errorType: msg.Length,
-      });
-    }
+  if (maxLength && !check.maxLength(str, maxLength)) {
+    errors.push({
+      error: `maximum allowed lenght for ${key} is ${maxLength}`,
+      errorType: msg.Length,
+    });
   }
 
   // case checks
-  if (uppercase) {
-    if (!check.uppercase(str)) {
-      errors.push({
-        error: `${key} must be all uppercase`,
-        errorType: msg.Case,
-      });
-    }
+  if (uppercase && !check.uppercase(str)) {
+    errors.push({
+      error: `${key} must be all uppercase`,
+      errorType: msg.Case,
+    });
   }
-  if (lowercase) {
-    if (!check.lowercase(str)) {
-      errors.push({
-        error: `${key} must be all lowercase`,
-        errorType: msg.Case,
-      });
-    }
+  if (lowercase && !check.lowercase(str)) {
+    errors.push({
+      error: `${key} must be all lowercase`,
+      errorType: msg.Case,
+    });
   }
 
   // format check
-  if (regex) {
-    if (!check.format(str, regex)) {
-      const errorMsg = `${key} must be ${
-        regex === "email" ? "a valid email" : "of valid format"
-      }`;
-      errors.push({
-        error: errorMsg,
-        errorType: msg.Format,
-      });
-    }
+  if (regex && !check.format(str, regex)) {
+    const errorMsg = `${key} must be ${
+      regex === "email" ? "a valid email" : "of valid format"
+    }`;
+    errors.push({
+      error: errorMsg,
+      errorType: msg.Format,
+    });
+  }
+
+  // enum check
+  if (cEnum && !check.enum(str, cEnum)) {
+    errors.push({
+      error: `${key} is not assignable to specified enum`,
+      errorType: msg.Enum,
+    });
   }
 
   return errors;
