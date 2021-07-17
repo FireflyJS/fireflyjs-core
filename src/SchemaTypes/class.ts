@@ -20,10 +20,10 @@ abstract class SchemaType<T = any> {
     return this.__config.default;
   }
 
-  public abstract validate: (
+  abstract validate(
     x: any,
     key: string
-  ) => {
+  ): {
     valid: boolean;
     errors: BaseError[];
   };
