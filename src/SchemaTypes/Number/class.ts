@@ -30,13 +30,15 @@ class NumberSchema extends SchemaType<number> {
     x: any,
     key: string = "value"
   ): {
+    value: number;
     valid: boolean;
     errors: NumberSchemaError[];
   } => {
-    const errors = checkRunner(x, this.__config, key);
+    const { value, errors } = checkRunner(x, this.__config, key);
 
     return {
       valid: Boolean(errors.length === 0),
+      value,
       errors,
     };
   };

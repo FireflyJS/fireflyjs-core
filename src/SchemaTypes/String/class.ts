@@ -3,7 +3,7 @@ import { StringSchemaConfig } from "./types/StringSchema";
 import checkRunner from "./checks/checksRunner";
 import { StringSchemaError } from "./types/StringError";
 
-class StringSchema extends SchemaType {
+class StringSchema extends SchemaType<string> {
   protected override __config: StringSchemaConfig = {};
 
   public trim = (): this => {
@@ -51,11 +51,12 @@ class StringSchema extends SchemaType {
   validate = (
     x: any,
     key: string = "value"
-  ): { valid: boolean; errors: StringSchemaError[] } => {
-    const errors = checkRunner(x, this.__config, key);
+  ): { value: string; valid: boolean; errors: StringSchemaError[] } => {
+    const { value, errors } = checkRunner(x, this.__config, key);
 
     return {
       valid: Boolean(errors.length === 0),
+      value,
       errors,
     };
   };

@@ -1,13 +1,11 @@
 import BaseSchemaConfig from "../../types/BaseSchema";
-
-type ValidValues = string | number | boolean | Date | Keys | ValidValues[];
+import SchemaType from "../../class";
 
 type Keys = {
-  [k: string]: ValidValues;
-  [k: number]: ValidValues;
+  [k: string]: SchemaType;
 };
 
-type Pattern = [BaseSchemaConfig, BaseSchemaConfig];
+type Pattern = [SchemaType, SchemaType];
 
 interface ObjectSchemaConfig extends BaseSchemaConfig {
   keys?: Keys;
