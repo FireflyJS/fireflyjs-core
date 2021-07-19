@@ -1,6 +1,15 @@
 import BaseError from "./types/BaseError";
 import BaseSchemaConfig from "./types/BaseSchema";
 
+type ValidateFn<T> = (
+  x: any,
+  key: string
+) => {
+  value: T | Partial<T>;
+  valid: boolean;
+  errors: BaseError[];
+};
+
 abstract class SchemaType<T = any> {
   protected __config: BaseSchemaConfig<T> = {};
 
@@ -22,14 +31,7 @@ abstract class SchemaType<T = any> {
     return this.__config.default;
   }
 
-  abstract validate(
-    x: any,
-    key: string
-  ): {
-    value: T;
-    valid: boolean;
-    errors: BaseError[];
-  };
+  abstract validate: ValidateFn<T>;
 }
 
 export default SchemaType;

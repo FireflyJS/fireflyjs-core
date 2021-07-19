@@ -1,14 +1,14 @@
 import BaseSchemaConfig from "../../types/BaseSchema";
 import SchemaType from "../../class";
 
-type Keys = {
-  [k: string]: SchemaType;
+type Keys<T = any> = {
+  [k in keyof T]: SchemaType;
 };
 
 type Pattern = [SchemaType, SchemaType];
 
-interface ObjectSchemaConfig extends BaseSchemaConfig {
-  keys?: Keys;
+interface ObjectSchemaConfig<T> extends BaseSchemaConfig {
+  keys?: Keys<T>;
   pattern?: Pattern;
 }
 
