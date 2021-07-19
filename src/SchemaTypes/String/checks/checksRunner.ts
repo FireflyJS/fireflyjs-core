@@ -9,7 +9,7 @@ const checkRunner = (
   x: any,
   config: StringSchemaConfig,
   key: string
-): StringSchemaError[] => {
+): { value: string; errors: StringSchemaError[] } => {
   const {
     trim,
     minLength,
@@ -27,10 +27,14 @@ const checkRunner = (
       error: `${key} must be a string`,
       errorType: msg.Type,
     });
-    return errors;
+    return { value: x, errors };
   }
 
-  const str = trim ? x.trim() : x;
+  // modifications
+  let str = x;
+  if (trim) str = str.trim();
+  if (uppercase) str = str.toUpperCase();
+  if (lowercase) str = str.toLowerCase();
 
   // length checks
   if (minLength && !check.minLength(str, minLength)) {
@@ -79,7 +83,7 @@ const checkRunner = (
     });
   }
 
-  return errors;
+  return { value: str, errors };
 };
 
 export default checkRunner;

@@ -9,7 +9,7 @@ const checkRunner = (
   x: any,
   config: NumberSchemaConfig,
   key: string
-): NumberSchemaError[] => {
+): { value: number; errors: NumberSchemaError[] } => {
   const { integer, min, max, enum: cEnum } = config;
   const errors: NumberSchemaError[] = [];
 
@@ -19,7 +19,7 @@ const checkRunner = (
       error: `${key} must be a number`,
       errorType: msg.Type,
     });
-    return errors;
+    return { value: x, errors };
   }
 
   // integer check
@@ -52,7 +52,7 @@ const checkRunner = (
     });
   }
 
-  return errors;
+  return { value: x, errors };
 };
 
 export default checkRunner;

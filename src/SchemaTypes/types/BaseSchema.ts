@@ -1,5 +1,5 @@
 interface BaseSchemaConfig<T = any> {
-  required?: boolean;
+  required?: true;
   default?: T;
 }
 
