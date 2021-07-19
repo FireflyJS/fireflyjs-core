@@ -21,14 +21,14 @@ const keysCheck = <T extends KeyValueStore>(
   });
 
   const transformed: Partial<T> = {};
-  Object.keys(x).forEach((key: string & keyof T) => {
+  Object.keys(x).forEach((key: keyof T) => {
     const schema = configKeys[key];
     if (schema) {
       const {
         valid,
         value,
         errors: schemaErrors,
-      } = schema.validate(x[key], key);
+      } = schema.validate(x[key], key.toString());
 
       if (valid) transformed[key] = value;
       else errors.push(...schemaErrors);
