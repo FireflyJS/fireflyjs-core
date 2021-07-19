@@ -2,6 +2,7 @@ import BaseError from "../../types/BaseError";
 
 enum ObjectSchemaErrorEnum {
   None = "None",
+  Type = "Object/Type",
   Keys = "Object/InvalidKeys",
   Pattern = "Object/InvalidPattern",
 }

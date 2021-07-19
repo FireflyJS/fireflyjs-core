@@ -1,32 +1,18 @@
-import BaseError from "../../types/BaseError";
-import { ObjectSchemaConfig } from "../types/ObjectSchema";
 import SchemaType from "../../class";
+import BaseError from "../../types/BaseError";
+import { Keys } from "../types/ObjectSchema";
 import { ObjectSchemaErrorEnum as msg } from "../types/ObjectError";
+import { KeyValueStore } from "../types/KeyValue";
 
-type ValidValueTypes =
-  | string
-  | number
-  | boolean
-  | Date
-  | KeyValueStore
-  | ValidValueTypes[];
-
-type KeyValueStore<T = any> = {
-  [k in keyof T]: ValidValueTypes;
-};
-
-const keysCheck = (
-  x: KeyValueStore,
-  config: ObjectSchemaConfig
-): { value: KeyValueStore; errors: BaseError[] } => {
+const keysCheck = <T extends KeyValueStore>(
+  x: KeyValueStore<T>,
+  configKeys: Keys<T>
+): { value: Partial<T>; errors: BaseError[] } => {
   const errors: BaseError[] = [];
-  const { keys: configKeys } = config;
-  if (!configKeys || Object.keys(configKeys).length === 0)
-    return { value: x, errors };
+  const requiredKeys = new Map<keyof T, SchemaType>();
+  const defaultKeys = new Map<keyof T, any>();
 
-  const requiredKeys = new Map<string, SchemaType>();
-  const defaultKeys = new Map<string, any>();
-  Object.keys(configKeys).forEach((key) => {
+  Object.keys(configKeys).forEach((key: keyof T) => {
     const schema = configKeys[key];
     if (schema && schema.__required && !schema.__default)
       requiredKeys.set(key, schema);
@@ -34,8 +20,8 @@ const keysCheck = (
     if (schema && schema.__default) defaultKeys.set(key, schema.__default);
   });
 
-  const transformed: KeyValueStore = {};
-  Object.keys(x).forEach((key) => {
+  const transformed: Partial<T> = {};
+  Object.keys(x).forEach((key: string & keyof T) => {
     const schema = configKeys[key];
     if (schema) {
       const {

@@ -1,11 +1,13 @@
 import SchemaType from "../class";
 import { ObjectSchemaConfig, Keys, Pattern } from "./types/ObjectSchema";
-import { ObjectSchemaError } from "./types/ObjectError";
+import { KeyValueStore } from "./types/KeyValue";
+import checksRunner from "./checks/checksRunner";
+import BaseError from "../types/BaseError";
 
-class ObjectSchema extends SchemaType<Keys> {
-  protected override __config: ObjectSchemaConfig = {};
+class ObjectSchema<T extends KeyValueStore> extends SchemaType<T> {
+  protected override __config: ObjectSchemaConfig<T> = {};
 
-  public keys = (x: Keys): this => {
+  public keys = (x: Keys<T>): this => {
     this.__config.keys = x;
     return this;
   };
@@ -16,18 +18,17 @@ class ObjectSchema extends SchemaType<Keys> {
   };
 
   public validate = (
-    _x: any,
-    // eslint-disable-next-line
-    _key: string = "value"
+    x: any,
+    key: string = "value"
   ): {
-    value: any;
+    value: Partial<T>;
     valid: boolean;
-    errors: ObjectSchemaError[];
+    errors: BaseError[];
   } => {
-    const errors: ObjectSchemaError[] = [];
+    const { value, errors } = checksRunner<T>(x, this.__config, key);
 
     return {
-      value: {},
+      value,
       valid: false,
       errors,
     };
