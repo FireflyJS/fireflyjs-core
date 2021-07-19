@@ -30,7 +30,7 @@ const checksRunner = <T extends KeyValueStore = any>(
 
   // keys check
   if (keys && Object.keys(keys).length !== 0) {
-    const { value, errors: keySchemaErrors } = check.keys(x, keys);
+    const { value, errors: keySchemaErrors } = check.keys<T>(x, keys);
     Object.assign(transformed, value);
     errors.push(...keySchemaErrors);
   }

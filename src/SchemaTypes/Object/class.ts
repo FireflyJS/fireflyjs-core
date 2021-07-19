@@ -29,7 +29,7 @@ class ObjectSchema<T extends KeyValueStore> extends SchemaType<T> {
 
     return {
       value,
-      valid: false,
+      valid: Boolean(errors.length === 0),
       errors,
     };
   };
