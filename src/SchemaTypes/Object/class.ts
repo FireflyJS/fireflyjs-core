@@ -20,12 +20,14 @@ class ObjectSchema extends SchemaType<Keys> {
     // eslint-disable-next-line
     _key: string = "value"
   ): {
+    value: any;
     valid: boolean;
     errors: ObjectSchemaError[];
   } => {
     const errors: ObjectSchemaError[] = [];
 
     return {
+      value: {},
       valid: false,
       errors,
     };
