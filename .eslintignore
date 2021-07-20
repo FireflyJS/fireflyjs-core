@@ -1,5 +1,6 @@
 package-lock.json
 tsconfig.json
 jest.config.js
+src/__tests__/
 lib/
 node_modules/
