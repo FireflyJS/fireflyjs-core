@@ -4,7 +4,7 @@ import { KeyValueStore } from "./types/KeyValue";
 import checksRunner from "./checks/checksRunner";
 import BaseError from "../types/BaseError";
 
-class ObjectSchema<T extends KeyValueStore> extends SchemaType<T> {
+class ObjectSchema<T extends KeyValueStore = any> extends SchemaType<T> {
   protected override __config: ObjectSchemaConfig<T> = {};
 
   public keys = (x: Keys<T>): this => {
