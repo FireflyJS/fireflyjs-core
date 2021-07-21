@@ -62,14 +62,11 @@ const checksRunner = <T extends KeyValueStore = any>(
     }
 
     if (keyResolution.resolved) {
-      if (requiredKeys.has(key)) requiredKeys.delete(key);
-      if (defaultKeys.has(key)) defaultKeys.delete(key);
+      if (requiredKeys.has(k)) requiredKeys.delete(k);
+      if (defaultKeys.has(k)) defaultKeys.delete(k);
+      if (!keyResolution.valid) errors.push(...keyResolution.errors);
 
-      if (keyResolution.valid && keyResolution.value) {
-        transformed[k] = keyResolution.value;
-      } else {
-        errors.push(...keyResolution.errors);
-      }
+      transformed[k] = keyResolution.value;
     } else {
       errors.push({
         error: `${k} is not allowed`,
