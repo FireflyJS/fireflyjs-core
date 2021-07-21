@@ -1,2 +1,3 @@
 export { typeCheck as type } from "./typeCheck";
-export { keysCheck as keys } from "./keysCheck";
+export { keyCheck as key } from "./keyCheck";
+export { patternCheck as pattern } from "./patternCheck";

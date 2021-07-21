@@ -3,6 +3,7 @@ type ValidValueTypes =
   | number
   | boolean
   | Date
+  | null
   | KeyValueStore
   | ValidValueTypes[];
 

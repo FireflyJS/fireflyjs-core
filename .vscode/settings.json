@@ -1,3 +1,4 @@
 {
+  "prettier.enable": true,
   "eslint.format.enable": true
 }
