@@ -11,7 +11,7 @@ const checksRunner = <T extends KeyValueStore = any>(
   config: ObjectSchemaConfig<T>,
   key: string
 ): {
-  value: Partial<T>;
+  value: KeyValueStore;
   errors: BaseError[];
 } => {
   const { keys: configKeys, pattern: configPattern } = config;
@@ -28,7 +28,7 @@ const checksRunner = <T extends KeyValueStore = any>(
       ],
     };
 
-  const transformed: Partial<T> = {};
+  const transformed: KeyValueStore = {};
   const errors: BaseError[] = [];
   const requiredKeys = new Map<keyof T, SchemaType>();
   const defaultKeys = new Map<keyof T, any>();
@@ -39,12 +39,12 @@ const checksRunner = <T extends KeyValueStore = any>(
 
       if (schema && schema.__required && !schema.__default)
         requiredKeys.set(k, schema);
-      if (schema && schema.__default) defaultKeys.set(k, schema);
+      if (schema && schema.__default) defaultKeys.set(k, schema.__default);
     });
   }
 
-  Object.keys(x).forEach((k: keyof T) => {
-    const keyResolution: CheckReturn<T> = {
+  Object.keys(x).forEach((k: string) => {
+    const keyResolution: CheckReturn = {
       resolved: false,
       valid: false,
       value: null,
@@ -52,34 +52,47 @@ const checksRunner = <T extends KeyValueStore = any>(
     };
 
     if (configKeys && Object.keys(configKeys).length > 0) {
-      const keyCheckResolution = check.key<T>(k, x[k], configKeys);\
-      Object.assign(keyResolution, keyCheckResolution)
+      const keyCheckResolution = check.key<T>(k, x[k]!, configKeys);
+      Object.assign(keyResolution, keyCheckResolution);
     }
 
-    if(!keyResolution.resolved && configPattern && configPattern.length > 0) {
-      const patternCheckResolution = check.pattern<T>(k, x[k], configPattern)
-      Object.assign(keyResolution, patternCheckResolution)
+    if (!keyResolution.resolved && configPattern && configPattern.length > 0) {
+      const patternCheckResolution = check.pattern(k, x[k]!, configPattern);
+      Object.assign(keyResolution, patternCheckResolution);
     }
 
-    if(keyResolution.resolved) {
+    if (keyResolution.resolved) {
       if (requiredKeys.has(key)) requiredKeys.delete(key);
       if (defaultKeys.has(key)) defaultKeys.delete(key);
 
-      if(keyResolution.valid && keyResolution.value) {
-        transformed[k] = keyResolution.value
-      }else {
-        errors.push(...keyResolution.errors)
+      if (keyResolution.valid && keyResolution.value) {
+        transformed[k] = keyResolution.value;
+      } else {
+        errors.push(...keyResolution.errors);
       }
-    }else {
+    } else {
       errors.push({
         error: `${k} is not allowed`,
-        errorType: msg.Keys
-      })
+        errorType: msg.Keys,
+      });
     }
-
   });
 
-  
+  defaultKeys.forEach((v, k) => {
+    transformed[k] = v;
+  });
+
+  requiredKeys.forEach((_, k) => {
+    errors.push({
+      error: `${k} is required`,
+      errorType: msg.Keys,
+    });
+  });
+
+  return {
+    value: transformed,
+    errors,
+  };
 };
 
 export default checksRunner;

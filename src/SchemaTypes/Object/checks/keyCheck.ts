@@ -6,7 +6,7 @@ const keyCheck = <T extends KeyValueStore>(
   key: string,
   value: KeyValueStore[string],
   configKeys: Keys<T>
-): CheckReturn<T> => {
+): CheckReturn => {
   const schema = configKeys[key];
   if (!schema) {
     return {

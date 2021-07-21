@@ -1,12 +1,12 @@
 import { KeyValueStore } from "../types/KeyValue";
 import { Pattern } from "../types/ObjectSchema";
-import { CheckReturn, Key, Value } from "./type";
+import { CheckReturn } from "./type";
 
-const patternCheck = <T extends KeyValueStore>(
-  key: Key<T>,
-  value: Value<T>,
+const patternCheck = (
+  key: string,
+  value: KeyValueStore[string],
   pattern: Pattern
-): CheckReturn<T> => {
+): CheckReturn => {
   const [keyPattern, valuePattern] = pattern;
 
   const { valid: keyValid } = keyPattern.validate(key, key.toString());
