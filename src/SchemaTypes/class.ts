@@ -1,11 +1,12 @@
 import BaseError from "./types/BaseError";
 import BaseSchemaConfig from "./types/BaseSchema";
+import { KeyValueStore } from "./Object/types/KeyValue";
 
 type ValidateFn<T> = (
   x: any,
   key: string
 ) => {
-  value: T | Partial<T>;
+  value: T | KeyValueStore;
   valid: boolean;
   errors: BaseError[];
 };

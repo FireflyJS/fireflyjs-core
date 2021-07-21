@@ -37,7 +37,7 @@ describe("test String Schema Parser", () => {
     const { valid, value, errors } = objectSchema.validate(testObj);
 
     expect(valid).toBe(false);
-    expect(value).toEqual({});
+    expect(value).toEqual(testObj);
     expect(errors).toEqual([
       {
         error: "name must be a string",
@@ -105,7 +105,7 @@ describe("test String Schema Parser", () => {
     const { valid, value, errors } = objectSchema.validate(testObj);
 
     expect(valid).toBe(false);
-    expect(value).toEqual({});
+    expect(value).toEqual(testObj);
     expect(errors).toEqual([
       {
         error: "minimum allowed length for name is 5",
@@ -130,7 +130,7 @@ describe("test String Schema Parser", () => {
     const { valid, value, errors } = objectSchema.validate(testObj);
 
     expect(valid).toBe(false);
-    expect(value).toEqual({});
+    expect(value).toEqual(testObj);
     expect(errors).toEqual([
       {
         error: "maximum allowed length for name is 5",
@@ -221,7 +221,7 @@ describe("test String Schema Parser", () => {
     const { valid, value, errors } = objectSchema.validate(testObj);
 
     expect(valid).toBe(false);
-    expect(value).toEqual({});
+    expect(value).toEqual(testObj);
     expect(errors).toEqual([
       {
         error: "name must be a valid email",
@@ -268,7 +268,7 @@ describe("test String Schema Parser", () => {
     const { valid, value, errors } = objectSchema.validate(testObj);
 
     expect(valid).toBe(false);
-    expect(value).toEqual({});
+    expect(value).toEqual(testObj);
     expect(errors).toEqual([
       {
         error: "name must be of valid format",
@@ -315,7 +315,7 @@ describe("test String Schema Parser", () => {
     const { valid, value, errors } = objectSchema.validate(testObj);
 
     expect(valid).toBe(false);
-    expect(value).toEqual({});
+    expect(value).toEqual(testObj);
     expect(errors).toEqual([
       {
         error: "name is not assignable to specified enum",

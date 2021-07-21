@@ -13,7 +13,9 @@ class ObjectSchema<T extends KeyValueStore = any> extends SchemaType<T> {
   };
 
   public pattern = (x: Pattern): this => {
-    this.__config.pattern = x;
+    if (x.length === 2) {
+      this.__config.pattern = x;
+    }
     return this;
   };
 
@@ -21,7 +23,7 @@ class ObjectSchema<T extends KeyValueStore = any> extends SchemaType<T> {
     x: any,
     key: string = "value"
   ): {
-    value: Partial<T>;
+    value: KeyValueStore;
     valid: boolean;
     errors: BaseError[];
   } => {
