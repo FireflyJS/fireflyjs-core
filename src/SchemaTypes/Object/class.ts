@@ -23,7 +23,7 @@ class ObjectSchema<T extends KeyValueStore = any> extends SchemaType<T> {
     x: any,
     key: string = "value"
   ): {
-    value: Partial<T>;
+    value: KeyValueStore;
     valid: boolean;
     errors: BaseError[];
   } => {
