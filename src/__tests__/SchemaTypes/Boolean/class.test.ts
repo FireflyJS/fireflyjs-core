@@ -37,7 +37,7 @@ describe("test Boolean Schema Parser", () => {
     const { valid, value, errors } = objectSchema.validate(testObj);
 
     expect(valid).toBe(false);
-    expect(value).toEqual({});
+    expect(value).toEqual(testObj);
     expect(errors).toEqual([
       {
         error: "isBoolean must be a boolean",
