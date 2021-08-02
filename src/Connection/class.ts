@@ -34,8 +34,6 @@ class Connection {
     return model;
   };
 
-  public __listCollections = () => this.__db.listCollections();
-
   public model = <T extends KeyValueStore>(
     name: string,
     schema: ObjectSchema<T>
