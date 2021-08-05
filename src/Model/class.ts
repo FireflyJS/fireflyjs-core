@@ -5,6 +5,8 @@ import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
 import ObjectSchema from "../SchemaTypes/Object/class";
 import { ModelErrorTypes as ErrorType } from "./types/error";
 import makeError from "../utils/makeError";
+import Query from "../Query/class";
+import ConfigPOJO from "../Query/types/ConfigPOJO";
 
 class Model<T extends KeyValueStore = any> {
   private __name: string;
@@ -48,6 +50,19 @@ class Model<T extends KeyValueStore = any> {
       docRef as __firestore.DocumentReference<T>,
       this.__schema
     );
+  };
+
+  public findById = async (id: string) => {
+    const collectionRef = this.__db.collection(this.__name);
+
+    // @ts-ignore
+    const config: ConfigPOJO<T> = {
+      _id: id,
+    };
+
+    // config["_id"] = id
+
+    return new Query<T>(config, collectionRef, true);
   };
 }
 
