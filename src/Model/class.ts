@@ -55,12 +55,9 @@ class Model<T extends KeyValueStore = any> {
   public findById = async (id: string) => {
     const collectionRef = this.__db.collection(this.__name);
 
-    // @ts-ignore
     const config: ConfigPOJO<T> = {
       _id: id,
     };
-
-    // config["_id"] = id
 
     return new Query<T>(config, collectionRef, true);
   };
