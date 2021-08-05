@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { firestore as __firestore } from "firebase-admin";
 import Document from "../Document/class";
 import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
@@ -45,7 +46,6 @@ class Model<T extends KeyValueStore = any> {
 
     return new Document<T>(
       docRef as __firestore.DocumentReference<T>,
-      this.__name,
       this.__schema
     );
   };
