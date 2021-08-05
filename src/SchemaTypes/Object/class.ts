@@ -7,6 +7,12 @@ import BaseError from "../types/BaseError";
 class ObjectSchema<T extends KeyValueStore = any> extends SchemaType<T> {
   protected override __config: ObjectSchemaConfig<T> = {};
 
+  get __keys() {
+    const configKeys = this.__config.keys;
+    if (configKeys) return Object.keys(configKeys);
+    return [];
+  }
+
   public keys = (x: Keys<T>): this => {
     this.__config.keys = x;
     return this;
@@ -19,11 +25,11 @@ class ObjectSchema<T extends KeyValueStore = any> extends SchemaType<T> {
     return this;
   };
 
-  public validate = (
+  public override validate = (
     x: any,
     key: string = "value"
   ): {
-    value: KeyValueStore;
+    value: Partial<T>;
     valid: boolean;
     errors: BaseError[];
   } => {

@@ -1,13 +1,12 @@
 import { firestore } from "firebase-admin";
 import BaseError from "./types/BaseError";
 import BaseSchemaConfig from "./types/BaseSchema";
-import { KeyValueStore } from "./Object/types/KeyValue";
 
 type ValidateFn<T> = (
   x: any,
   key: string
 ) => {
-  value: T | KeyValueStore | firestore.Timestamp;
+  value: T | Partial<T> | firestore.Timestamp;
   valid: boolean;
   errors: BaseError[];
 };

@@ -11,7 +11,7 @@ const checksRunner = <T extends KeyValueStore = any>(
   config: ObjectSchemaConfig<T>,
   key: string
 ): {
-  value: KeyValueStore;
+  value: Partial<T>;
   errors: BaseError[];
 } => {
   const { keys: configKeys, pattern: configPattern } = config;
@@ -28,7 +28,7 @@ const checksRunner = <T extends KeyValueStore = any>(
       ],
     };
 
-  const transformed: KeyValueStore = {};
+  const transformed: Partial<T> = {};
   const errors: BaseError[] = [];
   const requiredKeys = new Map<keyof T, SchemaType>();
   const defaultKeys = new Map<keyof T, any>();
@@ -66,6 +66,7 @@ const checksRunner = <T extends KeyValueStore = any>(
       if (defaultKeys.has(k)) defaultKeys.delete(k);
       if (!keyResolution.valid) errors.push(...keyResolution.errors);
 
+      // @ts-ignore
       transformed[k] = keyResolution.value;
     } else {
       errors.push({

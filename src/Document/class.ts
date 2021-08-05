@@ -1,28 +1,21 @@
+/* eslint-disable import/no-cycle */
 import { firestore as __firestore } from "firebase-admin";
-import ObjectSchema from "../SchemaTypes/Object/class";
 import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
 import { DocErrorTypes as ErrorType } from "./types/error";
 import makeError from "../utils/makeError";
+import ObjectSchema from "../SchemaTypes/Object/class";
 
 class Document<T extends KeyValueStore = any> {
   private __docRef: __firestore.DocumentReference<T>;
-
-  private __model: string;
 
   private __schema: ObjectSchema<T>;
 
   constructor(
     docRef: __firestore.DocumentReference<T>,
-    model: string,
     schema: ObjectSchema<T>
   ) {
     this.__docRef = docRef;
-    this.__model = model;
     this.__schema = schema;
-  }
-
-  get model() {
-    return this.__model;
   }
 
   get schema() {
@@ -39,6 +32,21 @@ class Document<T extends KeyValueStore = any> {
       throw makeError(ErrorType.invalid, "Document is empty or non existant");
 
     return docData;
+  };
+
+  public update = async (
+    data: Partial<T>,
+    options: {
+      merge: boolean;
+      mergeFields?: string[];
+    } = { merge: true }
+  ) => {
+    const { valid, value, errors } = this.__schema.validate(data);
+    if (!valid) {
+      throw makeError(ErrorType.validation, errors);
+    }
+
+    this.__docRef.set(value, options);
   };
 }
 
