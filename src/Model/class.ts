@@ -25,12 +25,16 @@ class Model<T extends KeyValueStore = any> {
     this.__db = firestore;
   }
 
-  get name() {
+  get _name() {
     return this.__name;
   }
 
-  get schema() {
+  get _schema() {
     return this.__schema;
+  }
+
+  get _db() {
+    return this.__db;
   }
 
   public create = async (data: Partial<T>) => {
@@ -59,7 +63,7 @@ class Model<T extends KeyValueStore = any> {
       _id: id,
     };
 
-    return new Query<T>(config, collectionRef, true);
+    return new Query<T>(config, collectionRef, this.__schema, true);
   };
 }
 
