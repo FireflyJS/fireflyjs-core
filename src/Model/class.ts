@@ -6,7 +6,7 @@ import ObjectSchema from "../SchemaTypes/Object/class";
 import { ModelErrorTypes as ErrorType } from "./types/error";
 import makeError from "../utils/makeError";
 import Query from "../Query/class";
-import ConfigPOJO from "../Query/types/ConfigPOJO";
+import { ConfigPOJO } from "../Query/types/ConfigPOJO";
 
 class Model<T extends KeyValueStore = any> {
   private __name: string;
@@ -56,7 +56,7 @@ class Model<T extends KeyValueStore = any> {
     );
   };
 
-  public findById = async (id: string) => {
+  public findById = (id: string) => {
     const collectionRef = this.__db.collection(this.__name);
 
     const config: ConfigPOJO<T> = {
@@ -64,6 +64,12 @@ class Model<T extends KeyValueStore = any> {
     };
 
     return new Query<T>(config, collectionRef, this.__schema, true);
+  };
+
+  public find = (query: ConfigPOJO<T>) => {
+    const collectionRef = this.__db.collection(this.__name);
+
+    return new Query<T>(query, collectionRef, this.__schema, false);
   };
 }
 

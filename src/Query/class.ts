@@ -3,10 +3,12 @@ import { firestore as __firestore } from "firebase-admin";
 import ObjectSchema from "../SchemaTypes/Object/class";
 import Document from "../Document/class";
 import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
-import ConfigPOJO from "./types/ConfigPOJO";
+import { ConfigPOJO, ExtConfigPOJO } from "./types/ConfigPOJO";
 
 class Query<T extends KeyValueStore> {
   private __config: ConfigPOJO<T>;
+
+  private __extConfig: ExtConfigPOJO;
 
   private __queryById: boolean = false;
 
@@ -21,10 +23,35 @@ class Query<T extends KeyValueStore> {
     queryById: boolean = false
   ) {
     this.__config = input;
+    this.__extConfig = {};
     this.__collectionRef = collectionRef;
     this.__schema = schema;
     this.__queryById = queryById;
   }
+
+  public limit = (limit: number) => {
+    this.__extConfig.limit = limit;
+
+    return this;
+  };
+
+  public offset = (offset: number) => {
+    this.__extConfig.offset = offset;
+
+    return this;
+  };
+
+  public orderBy = (...fields: string[]) => {
+    this.__extConfig.orderBy = fields;
+
+    return this;
+  };
+
+  public select = (...fields: string[]) => {
+    this.__extConfig.select = fields;
+
+    return this;
+  };
 
   public exec = async (): Promise<Document<T> | Document<T>[]> => {
     if (!this.__config) {
