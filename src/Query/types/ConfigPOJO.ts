@@ -7,4 +7,11 @@ type ConfigPOJO<T extends KeyValueStore> = {
   [k in keyof T & "_id"]: ConfigValues;
 };
 
-export default ConfigPOJO;
+type ExtConfigPOJO = {
+  limit?: number;
+  offset?: number;
+  orderBy?: string[];
+  select?: string[];
+};
+
+export { ConfigPOJO, ExtConfigPOJO };
