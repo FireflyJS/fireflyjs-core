@@ -36,7 +36,7 @@ beforeAll(async () => {
     userName: "lorem",
   });
 
-  userId = userDocument.id();
+  userId = userDocument.id;
 });
 
 describe("Tests for query", () => {
@@ -80,7 +80,7 @@ describe("Tests for query", () => {
       userName: "lorem",
     });
 
-    expect(doc.id()).toEqual(userId);
+    expect(doc.id).toEqual(userId);
   });
 
   it("findById returns null if passed an invalid id", async () => {
