@@ -6,6 +6,7 @@ import ObjectSchema from "../SchemaTypes/Object/class";
 import { ModelErrorTypes as ErrorType } from "./types/error";
 import makeError from "../utils/makeError";
 import Query from "../Query/class";
+import SingleQuery from "../SingleQuery/class";
 import { ConfigPOJO } from "../Query/types/ConfigPOJO";
 
 class Model<T extends KeyValueStore = any> {
@@ -63,13 +64,19 @@ class Model<T extends KeyValueStore = any> {
       _id: id,
     };
 
-    return new Query<T>(config, collectionRef, this.__schema, true);
+    return new SingleQuery<T>(config, collectionRef, this.__schema, true);
   };
 
   public find = (query: ConfigPOJO<T>) => {
     const collectionRef = this.__db.collection(this.__name);
 
-    return new Query<T>(query, collectionRef, this.__schema, false);
+    return new Query<T>(query, collectionRef, this.__schema);
+  };
+
+  public findOne = (query: ConfigPOJO<T>) => {
+    const collectionRef = this.__db.collection(this.__name);
+
+    return new SingleQuery<T>(query, collectionRef, this.__schema, false);
   };
 }
 

@@ -8,10 +8,6 @@ type ConfigPOJO<T extends KeyValueStore> = {
 };
 
 type ExtConfigPOJO = {
-  limit?: number;
-  offset?: number;
-  startAt?: number;
-  orderBy?: string[];
   select?: string[];
 };
 
