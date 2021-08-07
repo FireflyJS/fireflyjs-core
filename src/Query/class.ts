@@ -4,13 +4,13 @@ import ObjectSchema from "../SchemaTypes/Object/class";
 import Document from "../Document/class";
 import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
 import { ConfigPOJO, ExtConfigPOJO } from "./types/ConfigPOJO";
+import makeError from "../utils/makeError";
+import { QueryErrorTypes } from "./types/error";
 
 class Query<T extends KeyValueStore> {
   private __config: ConfigPOJO<T>;
 
   private __extConfig: ExtConfigPOJO;
-
-  private __queryById: boolean = false;
 
   private __collectionRef: __firestore.CollectionReference;
 
@@ -19,14 +19,12 @@ class Query<T extends KeyValueStore> {
   constructor(
     input: ConfigPOJO<T>,
     collectionRef: __firestore.CollectionReference,
-    schema: ObjectSchema<T>,
-    queryById: boolean = false
+    schema: ObjectSchema<T>
   ) {
     this.__config = input;
     this.__extConfig = {};
     this.__collectionRef = collectionRef;
     this.__schema = schema;
-    this.__queryById = queryById;
   }
 
   public limit = (limit: number) => {
@@ -41,34 +39,28 @@ class Query<T extends KeyValueStore> {
     return this;
   };
 
+  public startAt = (value: number) => {
+    this.__extConfig.startAt = value;
+
+    return this;
+  };
+
   public orderBy = (...fields: string[]) => {
     this.__extConfig.orderBy = fields;
 
     return this;
   };
 
+  // !! Research if this is even possible with firestore
   public select = (...fields: string[]) => {
     this.__extConfig.select = fields;
 
     return this;
   };
 
-  public exec = async (): Promise<Document<T> | Document<T>[]> => {
+  public exec = async (): Promise<Document<T>[]> => {
     if (!this.__config) {
       throw new Error("Query not configured");
-    }
-
-    if (
-      this.__queryById &&
-      this.__config._id &&
-      typeof this.__config._id === "string"
-    ) {
-      const docRef = this.__collectionRef.doc(this.__config._id);
-
-      return new Document<T>(
-        docRef as __firestore.DocumentReference<T>,
-        this.__schema
-      );
     }
 
     let query: __firestore.CollectionReference | __firestore.Query =
@@ -79,7 +71,32 @@ class Query<T extends KeyValueStore> {
       query = query.where(key, "==", this.__config[key]);
     });
 
+    if (this.__extConfig.startAt) {
+      query = query.startAt(this.__extConfig.startAt);
+    }
+
+    if (this.__extConfig.offset) {
+      query = query.startAfter(this.__extConfig.offset);
+    }
+
+    if (this.__extConfig.orderBy) {
+      this.__extConfig.orderBy.forEach((field: string) => {
+        query = query.orderBy(field);
+      });
+    }
+
+    if (this.__extConfig.limit) {
+      query = query.limit(this.__extConfig.limit);
+    }
+
     const querySnapshot = await query.get();
+
+    if (querySnapshot.empty) {
+      throw makeError(
+        QueryErrorTypes.notfound,
+        "Documents are invalid or not found"
+      );
+    }
     const documents: Document<T>[] = [];
 
     querySnapshot.forEach((docSnap) => {
