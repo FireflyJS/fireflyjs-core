@@ -22,6 +22,10 @@ class Document<T extends KeyValueStore = any> {
     return this.__schema;
   }
 
+  get id() {
+    return this.__docRef.id;
+  }
+
   public data = async () => {
     const docSnap = await this.__docRef.get().catch((err: Error) => {
       throw makeError(ErrorType.firestore, err.message);

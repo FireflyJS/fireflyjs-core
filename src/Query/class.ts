@@ -73,6 +73,7 @@ class Query<T extends KeyValueStore> {
 
     let query: __firestore.CollectionReference | __firestore.Query =
       this.__collectionRef;
+
     Object.keys(this.__config).forEach((k: string) => {
       const key = k as keyof ConfigPOJO<T>;
       query = query.where(key, "==", this.__config[key]);
