@@ -272,4 +272,36 @@ describe("Tests for query", () => {
 
     expect(lastDocData.sNO).toBe(1);
   });
+
+  // ! Needs to be fixed
+  it("select returns only the selected fields", async () => {
+    const query = await user
+      .find({
+        userName: "lorem",
+      })
+      .select("userName")
+      .exec();
+
+    if (!query) {
+      throw new Error("Document returned from query is empty");
+    }
+
+    expect(query).toBeDefined();
+
+    const doc = query[0];
+
+    if (!doc) {
+      throw new Error("Document returned from query is empty");
+    }
+
+    expect(doc).toBeDefined();
+
+    const docData = await doc.data();
+
+    expect(docData).toEqual({
+      userName: "lorem",
+      sNO: 1,
+      isAdmin: true,
+    });
+  });
 });
