@@ -15,7 +15,7 @@ type Operators = {
 };
 
 type ConfigPOJO<T extends KeyValueStore> = {
-  [k in keyof T]: Partial<T[k]> | Operators;
+  [k in keyof T]?: Partial<T[k]> | Operators;
 };
 
 type ExtConfigPOJO = {

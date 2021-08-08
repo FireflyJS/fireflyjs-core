@@ -1,6 +1,6 @@
 import { firestore as __firestore } from "firebase-admin";
-import { KeyValueStore } from "src/SchemaTypes/Object/types/KeyValue";
-import makeError from "src/utils/makeError";
+import { KeyValueStore } from "../../SchemaTypes/Object/types/KeyValue";
+import makeError from "../../utils/makeError";
 import { ConfigPOJO } from "../types/ConfigPOJO";
 import { QueryErrorTypes } from "../types/error";
 import operatorsTypeCheck from "./operatorsTypeCheck";
