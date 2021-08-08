@@ -5,6 +5,8 @@ import Document from "../Document/class";
 import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
 import { ConfigPOJO, ExtConfigPOJO } from "./types/ConfigPOJO";
 import buildQuery from "./utils/buildQuery";
+import makeError from "../utils/makeError";
+import { QueryErrorTypes } from "./types/error";
 
 class Query<T extends KeyValueStore> {
   private __config: ConfigPOJO<T>;
@@ -38,19 +40,26 @@ class Query<T extends KeyValueStore> {
     return this;
   };
 
+  public startAt = (value: number) => {
+    this.__extConfig.startAt = value;
+
+    return this;
+  };
+
   public orderBy = (...fields: string[]) => {
     this.__extConfig.orderBy = fields;
 
     return this;
   };
 
+  // !! Research if this is even possible with firestore
   public select = (...fields: string[]) => {
     this.__extConfig.select = fields;
 
     return this;
   };
 
-  public exec = async (): Promise<Document<T> | Document<T>[]> => {
+  public exec = async (): Promise<Document<T>[]> => {
     if (!this.__config) {
       throw new Error("Query not configured");
     }
@@ -62,7 +71,32 @@ class Query<T extends KeyValueStore> {
       query = buildQuery<T>(key, this.__config[key], query);
     });
 
+    if (this.__extConfig.startAt) {
+      query = query.startAt(this.__extConfig.startAt);
+    }
+
+    if (this.__extConfig.offset) {
+      query = query.startAfter(this.__extConfig.offset);
+    }
+
+    if (this.__extConfig.orderBy) {
+      this.__extConfig.orderBy.forEach((field: string) => {
+        query = query.orderBy(field);
+      });
+    }
+
+    if (this.__extConfig.limit) {
+      query = query.limit(this.__extConfig.limit);
+    }
+
     const querySnapshot = await query.get();
+
+    if (querySnapshot.empty) {
+      throw makeError(
+        QueryErrorTypes.notfound,
+        "Documents are invalid or not found"
+      );
+    }
     const documents: Document<T>[] = [];
 
     querySnapshot.forEach((docSnap) => {
