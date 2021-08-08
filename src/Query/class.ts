@@ -4,13 +4,12 @@ import ObjectSchema from "../SchemaTypes/Object/class";
 import Document from "../Document/class";
 import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
 import { ConfigPOJO, ExtConfigPOJO } from "./types/ConfigPOJO";
+import buildQuery from "./utils/buildQuery";
 
 class Query<T extends KeyValueStore> {
   private __config: ConfigPOJO<T>;
 
   private __extConfig: ExtConfigPOJO;
-
-  private __queryById: boolean = false;
 
   private __collectionRef: __firestore.CollectionReference;
 
@@ -19,14 +18,12 @@ class Query<T extends KeyValueStore> {
   constructor(
     input: ConfigPOJO<T>,
     collectionRef: __firestore.CollectionReference,
-    schema: ObjectSchema<T>,
-    queryById: boolean = false
+    schema: ObjectSchema<T>
   ) {
     this.__config = input;
     this.__extConfig = {};
     this.__collectionRef = collectionRef;
     this.__schema = schema;
-    this.__queryById = queryById;
   }
 
   public limit = (limit: number) => {
@@ -58,25 +55,11 @@ class Query<T extends KeyValueStore> {
       throw new Error("Query not configured");
     }
 
-    if (
-      this.__queryById &&
-      this.__config._id &&
-      typeof this.__config._id === "string"
-    ) {
-      const docRef = this.__collectionRef.doc(this.__config._id);
-
-      return new Document<T>(
-        docRef as __firestore.DocumentReference<T>,
-        this.__schema
-      );
-    }
-
     let query: __firestore.CollectionReference | __firestore.Query =
       this.__collectionRef;
 
-    Object.keys(this.__config).forEach((k: string) => {
-      const key = k as keyof ConfigPOJO<T>;
-      query = query.where(key, "==", this.__config[key]);
+    Object.keys(this.__config).forEach((key: keyof ConfigPOJO<T>) => {
+      query = buildQuery<T>(key, this.__config[key], query);
     });
 
     const querySnapshot = await query.get();

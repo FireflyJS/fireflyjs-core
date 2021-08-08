@@ -56,20 +56,10 @@ class Model<T extends KeyValueStore = any> {
     );
   };
 
-  public findById = (id: string) => {
-    const collectionRef = this.__db.collection(this.__name);
-
-    const config: ConfigPOJO<T> = {
-      _id: id,
-    };
-
-    return new Query<T>(config, collectionRef, this.__schema, true);
-  };
-
   public find = (query: ConfigPOJO<T>) => {
     const collectionRef = this.__db.collection(this.__name);
 
-    return new Query<T>(query, collectionRef, this.__schema, false);
+    return new Query<T>(query, collectionRef, this.__schema);
   };
 }
 
