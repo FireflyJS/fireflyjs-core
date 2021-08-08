@@ -1,5 +1,5 @@
 import { firestore as __firestore } from "firebase-admin";
-import { KeyValueStore } from "src/SchemaTypes/Object/types/KeyValue";
+import { KeyValueStore } from "../../SchemaTypes/Object/types/KeyValue";
 import { ConfigPOJO } from "../types/ConfigPOJO";
 import operatorsTypeCheck from "./operatorsTypeCheck";
 
