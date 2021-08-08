@@ -61,7 +61,7 @@ class Query<T extends KeyValueStore> {
 
   public exec = async (): Promise<Document<T>[]> => {
     if (!this.__config) {
-      throw new Error("Query not configured");
+      throw makeError(QueryErrorTypes.invalid, "Query not configured.");
     }
 
     let query: __firestore.CollectionReference | __firestore.Query =
@@ -91,12 +91,6 @@ class Query<T extends KeyValueStore> {
 
     const querySnapshot = await query.get();
 
-    if (querySnapshot.empty) {
-      throw makeError(
-        QueryErrorTypes.notfound,
-        "Documents are invalid or not found"
-      );
-    }
     const documents: Document<T>[] = [];
 
     querySnapshot.forEach((docSnap) => {

@@ -1,6 +1,8 @@
 import { firestore as __firestore } from "firebase-admin";
 import { KeyValueStore } from "src/SchemaTypes/Object/types/KeyValue";
+import makeError from "src/utils/makeError";
 import { ConfigPOJO } from "../types/ConfigPOJO";
+import { QueryErrorTypes } from "../types/error";
 import operatorsTypeCheck from "./operatorsTypeCheck";
 import parseOperators from "./parseOperators";
 
@@ -11,7 +13,10 @@ const buildQuery = <T extends KeyValueStore>(
 ): __firestore.Query => {
   if (typeof value === "object" && value !== null) {
     if (Array.isArray(value)) {
-      throw new Error("Array not supported, use operators");
+      throw makeError(
+        QueryErrorTypes.invalid,
+        "Arrays are not allowed in query."
+      );
     }
 
     if (value instanceof Date) {
