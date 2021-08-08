@@ -43,10 +43,10 @@ class SingleQuery<T extends KeyValueStore> {
 
     if (
       this.__queryById &&
-      this.__config._id &&
-      typeof this.__config._id === "string"
+      this.__config["_id"] &&
+      typeof this.__config["_id"] === "string"
     ) {
-      const docRef = this.__collectionRef.doc(this.__config._id);
+      const docRef = this.__collectionRef.doc(this.__config["_id"]);
 
       return new Document<T>(
         docRef as __firestore.DocumentReference<T>,
@@ -58,7 +58,7 @@ class SingleQuery<T extends KeyValueStore> {
       this.__collectionRef;
     Object.keys(this.__config).forEach((k: string) => {
       const key = k as keyof ConfigPOJO<T>;
-      query = query.where(key, "==", this.__config[key]);
+      query = query.where(key.toString(), "==", this.__config[key]);
     });
 
     const querySnapshot = await query.get();

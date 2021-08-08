@@ -1,17 +1,17 @@
 import { KeyValueStore } from "../../SchemaTypes/Object/types/KeyValue";
 
-type ConfigValues = string | number | boolean | null | Date;
+type OperatorValues = string | number | boolean | null | Date;
 
 type Operators = {
-  $gt: ConfigValues;
-  $gte: ConfigValues;
-  $lt: ConfigValues;
-  $lte: ConfigValues;
-  $eq: ConfigValues;
-  $neq: ConfigValues;
-  $ctn: ConfigValues | ConfigValues[];
-  $in: ConfigValues[];
-  $nin: ConfigValues[];
+  $gt?: OperatorValues;
+  $gte?: OperatorValues;
+  $lt?: OperatorValues;
+  $lte?: OperatorValues;
+  $eq?: OperatorValues;
+  $neq?: OperatorValues;
+  $ctn?: OperatorValues | OperatorValues[];
+  $in?: OperatorValues[];
+  $nin?: OperatorValues[];
 };
 
 type ConfigPOJO<T extends KeyValueStore> = {
@@ -26,4 +26,4 @@ type ExtConfigPOJO = {
   select?: string[];
 };
 
-export { ConfigPOJO, ExtConfigPOJO, Operators };
+export { ConfigPOJO, ExtConfigPOJO, Operators, OperatorValues };

@@ -2,6 +2,7 @@ import { firestore as __firestore } from "firebase-admin";
 import { KeyValueStore } from "src/SchemaTypes/Object/types/KeyValue";
 import { ConfigPOJO } from "../types/ConfigPOJO";
 import operatorsTypeCheck from "./operatorsTypeCheck";
+import parseOperators from "./parseOperators";
 
 const buildQuery = <T extends KeyValueStore>(
   key: keyof ConfigPOJO<T>,
@@ -22,7 +23,7 @@ const buildQuery = <T extends KeyValueStore>(
     }
 
     if (operatorsTypeCheck(value)) {
-      // Parse operators
+      return parseOperators(key, value, query);
     }
 
     // Flatten KeyValueStore and buildQuery recursively
