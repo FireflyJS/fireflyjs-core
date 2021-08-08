@@ -7,6 +7,7 @@ import { ConfigPOJO, ExtConfigPOJO } from "./types/ConfigPOJO";
 import buildQuery from "./utils/buildQuery";
 import makeError from "../utils/makeError";
 import { QueryErrorTypes } from "./types/error";
+import buildExtendedQuery from "./utils/buildExtendedQuery";
 
 class Query<T extends KeyValueStore> {
   private __config: ConfigPOJO<T>;
@@ -52,7 +53,6 @@ class Query<T extends KeyValueStore> {
     return this;
   };
 
-  // !! Research if this is even possible with firestore
   public select = (...fields: string[]) => {
     this.__extConfig.select = fields;
 
@@ -71,23 +71,7 @@ class Query<T extends KeyValueStore> {
       query = buildQuery<T>(key, this.__config[key], query);
     });
 
-    if (this.__extConfig.startAt) {
-      query = query.startAt(this.__extConfig.startAt);
-    }
-
-    if (this.__extConfig.offset) {
-      query = query.startAfter(this.__extConfig.offset);
-    }
-
-    if (this.__extConfig.orderBy) {
-      this.__extConfig.orderBy.forEach((field: string) => {
-        query = query.orderBy(field);
-      });
-    }
-
-    if (this.__extConfig.limit) {
-      query = query.limit(this.__extConfig.limit);
-    }
+    query = buildExtendedQuery(query, this.__extConfig);
 
     const querySnapshot = await query.get();
 
