@@ -6,12 +6,13 @@ const buildExtendedQuery = (
   extConfig: ExtConfigPOJO
 ): __firestore.Query => {
   let extendedQuery = query;
+
   if (extConfig.startAt) {
     extendedQuery = extendedQuery.startAt(extConfig.startAt);
   }
 
   if (extConfig.offset) {
-    extendedQuery = extendedQuery.startAfter(extConfig.offset);
+    extendedQuery = extendedQuery.offset(extConfig.offset);
   }
 
   if (extConfig.orderBy) {
@@ -26,6 +27,12 @@ const buildExtendedQuery = (
       } else {
         extendedQuery = extendedQuery.orderBy(field, "asc");
       }
+    });
+  }
+
+  if (extConfig.select) {
+    extConfig.select.forEach((field: string) => {
+      extendedQuery = extendedQuery.select(field);
     });
   }
 
