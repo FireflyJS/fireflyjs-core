@@ -60,10 +60,12 @@ class Model<T extends KeyValueStore = any> {
   public findById = (id: string) => {
     const collectionRef = this.__db.collection(this.__name);
 
+    // @ts-ignore
     const config: ConfigPOJO<T> = {
       _id: id,
     };
 
+    // @ts-ignore
     return new SingleQuery<T>(config, collectionRef, this.__schema, true);
   };
 
@@ -76,6 +78,7 @@ class Model<T extends KeyValueStore = any> {
   public findOne = (query: ConfigPOJO<T>) => {
     const collectionRef = this.__db.collection(this.__name);
 
+    // @ts-ignore
     return new SingleQuery<T>(query, collectionRef, this.__schema, false);
   };
 }

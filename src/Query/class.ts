@@ -4,6 +4,7 @@ import ObjectSchema from "../SchemaTypes/Object/class";
 import Document from "../Document/class";
 import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
 import { ConfigPOJO, ExtConfigPOJO } from "./types/ConfigPOJO";
+import buildQuery from "./utils/buildQuery";
 import makeError from "../utils/makeError";
 import { QueryErrorTypes } from "./types/error";
 
@@ -66,9 +67,8 @@ class Query<T extends KeyValueStore> {
     let query: __firestore.CollectionReference | __firestore.Query =
       this.__collectionRef;
 
-    Object.keys(this.__config).forEach((k: string) => {
-      const key = k as keyof ConfigPOJO<T>;
-      query = query.where(key, "==", this.__config[key]);
+    Object.keys(this.__config).forEach((key: keyof ConfigPOJO<T>) => {
+      query = buildQuery<T>(key, this.__config[key], query);
     });
 
     if (this.__extConfig.startAt) {
