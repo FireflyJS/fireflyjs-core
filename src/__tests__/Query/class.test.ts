@@ -304,4 +304,32 @@ describe("Tests for query", () => {
       isAdmin: true,
     });
   });
+
+  it("findByIdAndUpdate updates the data", async () => {
+    const doc = await user
+      .findByIdAndUpdate(
+        userId,
+        {
+          userName: "updated lorem",
+        },
+        {
+          merge: false,
+        }
+      )
+      .exec();
+
+    if (!doc) {
+      throw new Error("Document returned from query is empty");
+    }
+
+    expect(doc).toBeDefined();
+
+    const docData = await doc.data();
+
+    expect(docData).toEqual({
+      userName: "updated lorem",
+      sNO: 1,
+      isAdmin: true,
+    });
+  });
 });
