@@ -5,6 +5,7 @@ import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
 import { ConfigPOJO, ExtConfigPOJO } from "./types/ConfigPOJO";
 import makeError from "../utils/makeError";
 import { SingleQueryErrorTypes } from "./types/error";
+import buildExtendedQuery from "./utils/buildExtendedQuery";
 
 class SingleQuery<T extends KeyValueStore> {
   private __config: ConfigPOJO<T>;
@@ -60,6 +61,8 @@ class SingleQuery<T extends KeyValueStore> {
       const key = k as keyof ConfigPOJO<T>;
       query = query.where(key.toString(), "==", this.__config[key]);
     });
+
+    query = buildExtendedQuery(query, this.__extConfig);
 
     const querySnapshot = await query.get();
 
