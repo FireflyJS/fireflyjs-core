@@ -1,19 +1,14 @@
 import { firestore as __firestore } from "firebase-admin";
-import buildQuery from "../Query/utils/buildQuery";
-import makeError from "../utils/makeError";
 import Document from "../Document/class";
+import makeError from "../utils/makeError";
 import ObjectSchema from "../SchemaTypes/Object/class";
+import { ConfigPOJO } from "../Query/types/ConfigPOJO";
 import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
-import { ConfigPOJO, UpdateConfigPOJO } from "./types/ConfigPOJO";
-import { UpdateQueryErrorTypes } from "./types/error";
-import { UpdateOptions } from "./types/UpdateOptions";
+import { DeleteQueryErrorTypes } from "./types/error";
+import buildQuery from "../Query/utils/buildQuery";
 
-class UpdateQuery<T extends KeyValueStore> {
+class DeleteQuery<T extends KeyValueStore> {
   private __config: ConfigPOJO<T>;
-
-  private __updateConfig: UpdateConfigPOJO<T>;
-
-  private __updateOptions: UpdateOptions;
 
   private __queryById: boolean = false;
 
@@ -23,27 +18,22 @@ class UpdateQuery<T extends KeyValueStore> {
 
   constructor(
     input: ConfigPOJO<T>,
-    updateConfig: UpdateConfigPOJO<T>,
-    updateOptions: UpdateOptions,
     collectionRef: __firestore.CollectionReference,
     schema: ObjectSchema<T>,
     queryById: boolean = false
   ) {
     this.__config = input;
-    this.__updateConfig = updateConfig;
-    this.__updateOptions = updateOptions;
+    this.__queryById = queryById;
     this.__collectionRef = collectionRef;
     this.__schema = schema;
-    this.__queryById = queryById;
   }
 
-  public exec = async (): Promise<Document<T>> => {
+  public exec = async () => {
     if (!this.__config) {
-      throw makeError(UpdateQueryErrorTypes.invalid, "Query not configured");
-    }
-
-    if (!this.__updateConfig) {
-      throw makeError(UpdateQueryErrorTypes.invalid, "Update not configured");
+      throw makeError(
+        DeleteQueryErrorTypes.invalid,
+        "Delete Query not configured"
+      );
     }
 
     let query: __firestore.CollectionReference | __firestore.Query;
@@ -70,7 +60,7 @@ class UpdateQuery<T extends KeyValueStore> {
 
     if (typeof documentRef === "undefined") {
       throw makeError(
-        UpdateQueryErrorTypes.undefined,
+        DeleteQueryErrorTypes.undefined,
         "Document reference is undefined"
       );
     }
@@ -82,10 +72,8 @@ class UpdateQuery<T extends KeyValueStore> {
       this.__schema
     );
 
-    await document.update(this.__updateConfig, this.__updateOptions);
-
-    return document;
+    await document.delete();
   };
 }
 
-export default UpdateQuery;
+export default DeleteQuery;

@@ -52,6 +52,10 @@ class Document<T extends KeyValueStore = any> {
 
     this.__docRef.set(value, options);
   };
+
+  public delete = async () => {
+    await this.__docRef.delete();
+  };
 }
 
 export default Document;
