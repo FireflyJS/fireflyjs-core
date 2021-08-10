@@ -332,4 +332,54 @@ describe("Tests for query", () => {
       isAdmin: true,
     });
   });
+
+  it("findByIdAndDelete removes the document", async () => {
+    try {
+      await user.findByIdAndDelete(userId).exec();
+
+      const doc = await user.findById(userId).exec();
+
+      if (!doc) {
+        throw new Error("Document returned from query is empty");
+      }
+
+      expect(doc).toBeDefined();
+
+      const docData = await doc.data();
+
+      expect(docData).toBeUndefined();
+    } catch (err) {
+      const errObj = JSON.parse(err.message);
+      expect(errObj.type).toBe("Document/Invalid");
+    }
+  });
+
+  it("findOneAndDelete removes the document", async () => {
+    try {
+      await user
+        .findOneAndDelete({
+          userName: "ipsum",
+        })
+        .exec();
+
+      const doc = await user
+        .findOne({
+          userName: "ipsum",
+        })
+        .exec();
+
+      if (!doc) {
+        throw new Error("Document returned from query is empty");
+      }
+
+      expect(doc).toBeDefined();
+
+      const docData = await doc.data();
+
+      expect(docData).toBeUndefined();
+    } catch (err) {
+      const errObj = JSON.parse(err.message);
+      expect(errObj.type).toBe("SingleQuery/NotFound");
+    }
+  });
 });
