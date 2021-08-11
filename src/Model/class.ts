@@ -8,6 +8,10 @@ import makeError from "../utils/makeError";
 import Query from "../Query/class";
 import SingleQuery from "../SingleQuery/class";
 import { ConfigPOJO } from "../Query/types/ConfigPOJO";
+import { UpdateConfigPOJO } from "../UpdateQuery/types/ConfigPOJO";
+import UpdateQuery from "../UpdateQuery/class";
+import { UpdateOptions } from "../UpdateQuery/types/UpdateOptions";
+import DeleteQuery from "../DeleteQuery/class";
 
 class Model<T extends KeyValueStore = any> {
   private __name: string;
@@ -80,6 +84,62 @@ class Model<T extends KeyValueStore = any> {
 
     // @ts-ignore
     return new SingleQuery<T>(query, collectionRef, this.__schema, false);
+  };
+
+  public findOneAndUpdate = (
+    query: ConfigPOJO<T>,
+    updateQuery: UpdateConfigPOJO<T>,
+    updateOptions: UpdateOptions
+  ) => {
+    const collectionRef = this.__db.collection(this.__name);
+
+    return new UpdateQuery<T>(
+      query,
+      updateQuery,
+      updateOptions,
+      collectionRef,
+      this.__schema,
+      false
+    );
+  };
+
+  public findByIdAndUpdate = (
+    id: string,
+    updateQuery: UpdateConfigPOJO<T>,
+    updateOptions: UpdateOptions
+  ) => {
+    const collectionRef = this.__db.collection(this.__name);
+
+    // @ts-ignore
+    const config: ConfigPOJO<T> = {
+      _id: id,
+    };
+
+    return new UpdateQuery<T>(
+      config,
+      updateQuery,
+      updateOptions,
+      collectionRef,
+      this.__schema,
+      true
+    );
+  };
+
+  public findByIdAndDelete = (id: string) => {
+    const collectionRef = this.__db.collection(this.__name);
+
+    // @ts-ignore
+    const config: ConfigPOJO<T> = {
+      _id: id,
+    };
+
+    return new DeleteQuery<T>(config, collectionRef, this.__schema, true);
+  };
+
+  public findOneAndDelete = (query: ConfigPOJO<T>) => {
+    const collectionRef = this.__db.collection(this.__name);
+
+    return new DeleteQuery<T>(query, collectionRef, this.__schema, false);
   };
 }
 

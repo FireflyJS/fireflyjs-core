@@ -272,4 +272,114 @@ describe("Tests for query", () => {
 
     expect(lastDocData.sNO).toBe(1);
   });
+
+  // ! Needs to be fixed
+  it("select returns only the selected fields", async () => {
+    const query = await user
+      .find({
+        userName: "lorem",
+      })
+      .select("userName")
+      .exec();
+
+    if (!query) {
+      throw new Error("Document returned from query is empty");
+    }
+
+    expect(query).toBeDefined();
+
+    const doc = query[0];
+
+    if (!doc) {
+      throw new Error("Document returned from query is empty");
+    }
+
+    expect(doc).toBeDefined();
+
+    const docData = await doc.data();
+
+    expect(docData).toEqual({
+      userName: "lorem",
+      sNO: 1,
+      isAdmin: true,
+    });
+  });
+
+  it("findByIdAndUpdate updates the data", async () => {
+    const doc = await user
+      .findByIdAndUpdate(
+        userId,
+        {
+          userName: "updated lorem",
+        },
+        {
+          merge: false,
+        }
+      )
+      .exec();
+
+    if (!doc) {
+      throw new Error("Document returned from query is empty");
+    }
+
+    expect(doc).toBeDefined();
+
+    const docData = await doc.data();
+
+    expect(docData).toEqual({
+      userName: "updated lorem",
+      sNO: 1,
+      isAdmin: true,
+    });
+  });
+
+  it("findByIdAndDelete removes the document", async () => {
+    try {
+      await user.findByIdAndDelete(userId).exec();
+
+      const doc = await user.findById(userId).exec();
+
+      if (!doc) {
+        throw new Error("Document returned from query is empty");
+      }
+
+      expect(doc).toBeDefined();
+
+      const docData = await doc.data();
+
+      expect(docData).toBeUndefined();
+    } catch (err) {
+      const errObj = JSON.parse(err.message);
+      expect(errObj.type).toBe("Document/Invalid");
+    }
+  });
+
+  it("findOneAndDelete removes the document", async () => {
+    try {
+      await user
+        .findOneAndDelete({
+          userName: "ipsum",
+        })
+        .exec();
+
+      const doc = await user
+        .findOne({
+          userName: "ipsum",
+        })
+        .exec();
+
+      if (!doc) {
+        throw new Error("Document returned from query is empty");
+      }
+
+      expect(doc).toBeDefined();
+
+      const docData = await doc.data();
+
+      expect(docData).toBeUndefined();
+    } catch (err) {
+      const errObj = JSON.parse(err.message);
+      expect(errObj.type).toBe("SingleQuery/NotFound");
+    }
+  });
 });
