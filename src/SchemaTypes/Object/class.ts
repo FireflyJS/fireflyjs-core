@@ -3,6 +3,7 @@ import { ObjectSchemaConfig, Keys, Pattern } from "./types/ObjectSchema";
 import { KeyValueStore } from "./types/KeyValue";
 import checksRunner from "./checks/checksRunner";
 import BaseError from "../types/BaseError";
+import { Options } from "../types/ValidateFn";
 
 class ObjectSchema<T extends KeyValueStore = any> extends SchemaType<T> {
   protected override __config: ObjectSchemaConfig<T> = {};
@@ -25,15 +26,19 @@ class ObjectSchema<T extends KeyValueStore = any> extends SchemaType<T> {
     return this;
   };
 
-  public override validate = (
+  validate = (
     x: any,
-    key: string = "value"
+    key: string = "value",
+    options: Options = {
+      onlySupplied: false,
+      onlyKeys: false,
+    }
   ): {
     value: Partial<T>;
     valid: boolean;
     errors: BaseError[];
   } => {
-    const { value, errors } = checksRunner<T>(x, this.__config, key);
+    const { value, errors } = checksRunner<T>(x, this.__config, key, options);
 
     return {
       value,

@@ -5,18 +5,19 @@ import { ObjectSchemaErrorEnum as msg } from "../types/ObjectError";
 import { KeyValueStore } from "../types/KeyValue";
 import SchemaType from "../../class";
 import { CheckReturn } from "./type";
+import { Options } from "../../types/ValidateFn";
 
 const checksRunner = <T extends KeyValueStore = any>(
   x: any,
   config: ObjectSchemaConfig<T>,
-  key: string
+  key: string,
+  options: Options
 ): {
   value: Partial<T>;
   errors: BaseError[];
 } => {
   const { keys: configKeys, pattern: configPattern } = config;
 
-  // type check
   if (!check.type(x))
     return {
       value: x,
@@ -30,10 +31,15 @@ const checksRunner = <T extends KeyValueStore = any>(
 
   const transformed: Partial<T> = {};
   const errors: BaseError[] = [];
+
   const requiredKeys = new Map<keyof T, SchemaType>();
   const defaultKeys = new Map<keyof T, any>();
 
-  if (configKeys && Object.keys(configKeys).length > 0) {
+  if (
+    configKeys &&
+    Object.keys(configKeys).length > 0 &&
+    !options.onlySupplied
+  ) {
     Object.keys(configKeys).forEach((k: keyof T) => {
       const schema = configKeys[k];
 
@@ -56,14 +62,21 @@ const checksRunner = <T extends KeyValueStore = any>(
       Object.assign(keyResolution, keyCheckResolution);
     }
 
-    if (!keyResolution.resolved && configPattern && configPattern.length > 0) {
+    if (
+      !options.onlyKeys &&
+      !keyResolution.resolved &&
+      configPattern &&
+      configPattern.length === 2
+    ) {
       const patternCheckResolution = check.pattern(k, x[k]!, configPattern);
       Object.assign(keyResolution, patternCheckResolution);
     }
 
     if (keyResolution.resolved) {
-      if (requiredKeys.has(k)) requiredKeys.delete(k);
-      if (defaultKeys.has(k)) defaultKeys.delete(k);
+      if (!options.onlySupplied) {
+        if (requiredKeys.has(k)) requiredKeys.delete(k);
+        if (defaultKeys.has(k)) defaultKeys.delete(k);
+      }
       if (!keyResolution.valid) errors.push(...keyResolution.errors);
 
       // @ts-ignore
@@ -76,16 +89,18 @@ const checksRunner = <T extends KeyValueStore = any>(
     }
   });
 
-  defaultKeys.forEach((v, k) => {
-    transformed[k] = v;
-  });
-
-  requiredKeys.forEach((_, k) => {
-    errors.push({
-      error: `${k} is required`,
-      errorType: msg.Keys,
+  if (!options.onlySupplied) {
+    defaultKeys.forEach((v, k) => {
+      transformed[k] = v;
     });
-  });
+
+    requiredKeys.forEach((_, k) => {
+      errors.push({
+        error: `${k} is required`,
+        errorType: msg.Keys,
+      });
+    });
+  }
 
   return {
     value: transformed,

@@ -1,15 +1,5 @@
-import { firestore } from "firebase-admin";
-import BaseError from "./types/BaseError";
 import BaseSchemaConfig from "./types/BaseSchema";
-
-type ValidateFn<T> = (
-  x: any,
-  key: string
-) => {
-  value: T | Partial<T> | firestore.Timestamp;
-  valid: boolean;
-  errors: BaseError[];
-};
+import { ValidateFn } from "./types/ValidateFn";
 
 abstract class SchemaType<T = any> {
   protected __config: BaseSchemaConfig<T> = {};
