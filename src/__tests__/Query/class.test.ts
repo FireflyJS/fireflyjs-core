@@ -313,7 +313,7 @@ describe("Tests for query", () => {
           userName: "updated lorem",
         },
         {
-          merge: false,
+          merge: true,
         }
       )
       .exec();

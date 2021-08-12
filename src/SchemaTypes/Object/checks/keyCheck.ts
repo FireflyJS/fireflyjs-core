@@ -1,11 +1,13 @@
 import { Keys } from "../types/ObjectSchema";
 import { KeyValueStore } from "../types/KeyValue";
 import { CheckReturn } from "./type";
+import { Options } from "../../types/ValidateFn";
 
 const keyCheck = <T extends KeyValueStore>(
   key: string,
   value: KeyValueStore[string],
-  configKeys: Keys<T>
+  configKeys: Keys<T>,
+  options: Options
 ): CheckReturn => {
   const schema = configKeys[key];
   if (!schema) {
@@ -21,7 +23,7 @@ const keyCheck = <T extends KeyValueStore>(
     valid,
     value: modValue,
     errors,
-  } = schema.validate(value, key.toString());
+  } = schema.validate(value, key.toString(), options);
 
   return {
     resolved: true,

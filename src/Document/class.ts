@@ -45,7 +45,9 @@ class Document<T extends KeyValueStore = any> {
       mergeFields?: string[];
     } = { merge: true }
   ) => {
-    const { valid, value, errors } = this.__schema.validate(data);
+    const { valid, value, errors } = this.__schema.validate(data, undefined, {
+      onlySupplied: true,
+    });
     if (!valid) {
       throw makeError(ErrorType.validation, errors);
     }

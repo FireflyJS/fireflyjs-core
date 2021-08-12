@@ -11,7 +11,7 @@ const checksRunner = <T extends KeyValueStore = any>(
   x: any,
   config: ObjectSchemaConfig<T>,
   key: string,
-  options: Options
+  options: NonNullable<Options>
 ): {
   value: Partial<T>;
   errors: BaseError[];
@@ -43,9 +43,14 @@ const checksRunner = <T extends KeyValueStore = any>(
     Object.keys(configKeys).forEach((k: keyof T) => {
       const schema = configKeys[k];
 
-      if (schema && schema.__required && !schema.__default)
+      if (
+        schema &&
+        schema.__required &&
+        typeof schema.__default === "undefined"
+      )
         requiredKeys.set(k, schema);
-      if (schema && schema.__default) defaultKeys.set(k, schema.__default);
+      if (schema && typeof schema.__default !== "undefined")
+        defaultKeys.set(k, schema.__default);
     });
   }
 
@@ -58,7 +63,7 @@ const checksRunner = <T extends KeyValueStore = any>(
     };
 
     if (configKeys && Object.keys(configKeys).length > 0) {
-      const keyCheckResolution = check.key<T>(k, x[k]!, configKeys);
+      const keyCheckResolution = check.key<T>(k, x[k]!, configKeys, options);
       Object.assign(keyResolution, keyCheckResolution);
     }
 
