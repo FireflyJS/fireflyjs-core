@@ -2,8 +2,8 @@ import { firestore } from "firebase-admin";
 import BaseError from "./BaseError";
 
 type Options = {
-  onlySupplied: boolean;
-  onlyKeys: boolean;
+  onlySupplied?: boolean;
+  onlyKeys?: boolean;
 };
 
 type ValidateFn<T> = (

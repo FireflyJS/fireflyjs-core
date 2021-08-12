@@ -43,7 +43,9 @@ class Model<T extends KeyValueStore = any> {
   }
 
   public create = async (data: Partial<T>) => {
-    const { valid, value, errors } = this.__schema.validate(data);
+    const { valid, value, errors } = this.__schema.validate(data, undefined, {
+      onlyKeys: true,
+    });
     if (!valid) {
       throw makeError(ErrorType.validation, errors);
     }
