@@ -1,0 +1,12 @@
+{
+  "name": "firestore-emulator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx firebase emulators:start --project demo-firefly --import=./sample_data"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
