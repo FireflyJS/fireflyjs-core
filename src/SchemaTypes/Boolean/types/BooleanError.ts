@@ -1,10 +1,6 @@
-import BaseError from "../../types/BaseError";
-
-enum BooleanSchemaErrorEnum {
+enum BooleanSchemaErrors {
   None = "None",
   Type = "Boolean/Type",
 }
 
-type BooleanSchemaError = BaseError<BooleanSchemaErrorEnum>;
-
-export { BooleanSchemaError, BooleanSchemaErrorEnum };
+export { BooleanSchemaErrors };

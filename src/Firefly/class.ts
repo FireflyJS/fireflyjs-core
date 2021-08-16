@@ -1,8 +1,7 @@
-/* eslint-disable import/no-cycle */
 import { firestore as __firestore } from "firebase-admin";
+import Connection from "../Connection";
+import { FireflyErrors } from ".";
 import makeError from "../utils/makeError";
-import Connection from "../Connection/class";
-import { FireflyErrorTypes } from "./index";
 
 class Firefly {
   private __dbMap: Map<string, Connection> = new Map<string, Connection>();
@@ -21,7 +20,7 @@ class Firefly {
 
     if (typeof connection === "undefined") {
       throw makeError(
-        FireflyErrorTypes.invalid,
+        FireflyErrors.invalid,
         `Firefly Connection with key ${dbName} does not exist`
       );
     }

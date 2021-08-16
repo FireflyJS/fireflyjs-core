@@ -1,7 +1,7 @@
 import { firestore as __firestore } from "firebase-admin";
+import Model from "../Model";
 import ObjectSchema from "../SchemaTypes/Object/class";
-import Model from "../Model/class";
-import ModelPOJO from "./types/ModelPOJO";
+import { ModelPOJO } from ".";
 import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
 
 class Connection {

@@ -1,10 +1,10 @@
 import SchemaType from "../class";
-import { BooleanSchemaConfig } from "./types/BooleanSchema";
-import checkRunner from "./checks/checkRunner";
-import { BooleanSchemaError } from "./types/BooleanError";
+import { Config, Errors } from ".";
+import BaseError from "../types/BaseError";
+import checkRunner from "./checks";
 
 class BooleanSchema extends SchemaType<boolean> {
-  protected override __config: BooleanSchemaConfig = {};
+  protected override __config: Config = {};
 
   public strict(): this {
     this.__config.strict = true;
@@ -14,7 +14,11 @@ class BooleanSchema extends SchemaType<boolean> {
   validate = (
     x: any,
     key: string = "value"
-  ): { value: boolean; valid: boolean; errors: BooleanSchemaError[] } => {
+  ): {
+    value: boolean;
+    valid: boolean;
+    errors: BaseError<Errors>[];
+  } => {
     const { value, errors } = checkRunner(x, this.__config, key);
 
     return {
