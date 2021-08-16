@@ -1,7 +1,8 @@
+/* eslint-disable import/no-cycle */
 import { firestore as __firestore } from "firebase-admin";
 import makeError from "../utils/makeError";
 import Connection from "../Connection/class";
-import { FireflyErrorTypes } from "./types/error";
+import { FireflyErrorTypes } from "./index";
 
 class Firefly {
   private __dbMap: Map<string, Connection> = new Map<string, Connection>();

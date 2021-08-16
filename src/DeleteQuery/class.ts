@@ -1,10 +1,11 @@
+/* eslint-disable import/no-cycle */
 import { firestore as __firestore } from "firebase-admin";
 import Document from "../Document/class";
 import makeError from "../utils/makeError";
 import ObjectSchema from "../SchemaTypes/Object/class";
-import { ConfigPOJO } from "../Query/types/ConfigPOJO";
+import { ConfigPOJO } from "../Query";
 import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
-import { DeleteQueryErrorTypes } from "./types/error";
+import { DeleteQueryErrorTypes } from "./index";
 import buildQuery from "../Query/utils/buildQuery";
 
 class DeleteQuery<T extends KeyValueStore> {

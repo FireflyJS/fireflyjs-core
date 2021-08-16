@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { firestore as __firestore } from "firebase-admin";
 import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
-import { DocErrorTypes as ErrorType } from "./types/error";
+import { DocErrorTypes as ErrorType } from "./index";
 import makeError from "../utils/makeError";
 import ObjectSchema from "../SchemaTypes/Object/class";
 

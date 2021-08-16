@@ -1,12 +1,16 @@
+/* eslint-disable import/no-cycle */
 import { firestore as __firestore } from "firebase-admin";
 import buildQuery from "../Query/utils/buildQuery";
 import makeError from "../utils/makeError";
-import Document from "../Document/class";
+import { Document } from "../Document";
 import ObjectSchema from "../SchemaTypes/Object/class";
 import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
-import { ConfigPOJO, UpdateConfigPOJO } from "./types/ConfigPOJO";
-import { UpdateQueryErrorTypes } from "./types/error";
-import { UpdateOptions } from "./types/UpdateOptions";
+import {
+  ConfigPOJO,
+  UpdateConfigPOJO,
+  UpdateQueryErrorTypes,
+  UpdateOptions,
+} from "./index";
 
 class UpdateQuery<T extends KeyValueStore> {
   private __config: ConfigPOJO<T>;
