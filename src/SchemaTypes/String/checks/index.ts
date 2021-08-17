@@ -1,15 +1,12 @@
-import { StringSchemaConfig } from "../types/StringSchema";
-import {
-  StringSchemaError,
-  StringSchemaErrorEnum as msg,
-} from "../types/StringError";
+import BaseError from "../../types/BaseError";
+import { Errors, Config } from "..";
 import * as check from "./allChecks";
 
 const checkRunner = (
   x: any,
-  config: StringSchemaConfig,
+  config: Config,
   key: string
-): { value: string; errors: StringSchemaError[] } => {
+): { value: string; errors: BaseError<Errors>[] } => {
   const {
     trim,
     minLength,
@@ -19,13 +16,13 @@ const checkRunner = (
     regex,
     enum: cEnum,
   } = config;
-  const errors: StringSchemaError[] = [];
+  const errors: BaseError<Errors>[] = [];
 
   // type check
   if (!check.type(x)) {
     errors.push({
       error: `${key} must be a string`,
-      errorType: msg.Type,
+      errorType: Errors.Type,
     });
     return { value: x, errors };
   }
@@ -40,13 +37,13 @@ const checkRunner = (
   if (minLength && !check.minLength(str, minLength)) {
     errors.push({
       error: `minimum allowed length for ${key} is ${minLength}`,
-      errorType: msg.Length,
+      errorType: Errors.Length,
     });
   }
   if (maxLength && !check.maxLength(str, maxLength)) {
     errors.push({
       error: `maximum allowed length for ${key} is ${maxLength}`,
-      errorType: msg.Length,
+      errorType: Errors.Length,
     });
   }
 
@@ -54,24 +51,24 @@ const checkRunner = (
   if (uppercase && !check.uppercase(str)) {
     errors.push({
       error: `${key} must be all uppercase`,
-      errorType: msg.Case,
+      errorType: Errors.Case,
     });
   }
   if (lowercase && !check.lowercase(str)) {
     errors.push({
       error: `${key} must be all lowercase`,
-      errorType: msg.Case,
+      errorType: Errors.Case,
     });
   }
 
   // format check
   if (regex && !check.format(str, regex)) {
-    const errorMsg = `${key} must be ${
+    const errorErrors = `${key} must be ${
       regex === "email" ? "a valid email" : "of valid format"
     }`;
     errors.push({
-      error: errorMsg,
-      errorType: msg.Format,
+      error: errorErrors,
+      errorType: Errors.Format,
     });
   }
 
@@ -79,7 +76,7 @@ const checkRunner = (
   if (cEnum && !check.enum(str, cEnum)) {
     errors.push({
       error: `${key} is not assignable to specified enum`,
-      errorType: msg.Enum,
+      errorType: Errors.Enum,
     });
   }
 

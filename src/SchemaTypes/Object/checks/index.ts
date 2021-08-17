@@ -1,15 +1,13 @@
-import { ObjectSchemaConfig } from "../types/ObjectSchema";
-import * as check from "./allChecks";
-import BaseError from "../../types/BaseError";
-import { ObjectSchemaErrorEnum as msg } from "../types/ObjectError";
-import { KeyValueStore } from "../types/KeyValue";
 import SchemaType from "../../class";
+import BaseError from "../../types/BaseError";
+import { Errors, Config, KeyValueStore } from "..";
 import { CheckReturn } from "./type";
 import { Options } from "../../types/ValidateFn";
+import * as check from "./allChecks";
 
 const checksRunner = <T extends KeyValueStore = any>(
   x: any,
-  config: ObjectSchemaConfig<T>,
+  config: Config<T>,
   key: string,
   options: NonNullable<Options>
 ): {
@@ -24,7 +22,7 @@ const checksRunner = <T extends KeyValueStore = any>(
       errors: [
         {
           error: `${key} must contain key value pairs`,
-          errorType: msg.Type,
+          errorType: Errors.Type,
         },
       ],
     };
@@ -89,7 +87,7 @@ const checksRunner = <T extends KeyValueStore = any>(
     } else {
       errors.push({
         error: `${k} is not allowed`,
-        errorType: msg.Keys,
+        errorType: Errors.Keys,
       });
     }
   });
@@ -102,7 +100,7 @@ const checksRunner = <T extends KeyValueStore = any>(
     requiredKeys.forEach((_, k) => {
       errors.push({
         error: `${k} is required`,
-        errorType: msg.Keys,
+        errorType: Errors.Keys,
       });
     });
   }

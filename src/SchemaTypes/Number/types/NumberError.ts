@@ -1,6 +1,4 @@
-import BaseError from "../../types/BaseError";
-
-enum NumberSchemaErrorEnum {
+enum NumberSchemaErrors {
   None = "None",
   Type = "Number/Type",
   Integer = "Number/Integer",
@@ -8,6 +6,4 @@ enum NumberSchemaErrorEnum {
   Enum = "Number/InvalidValue",
 }
 
-type NumberSchemaError = BaseError<NumberSchemaErrorEnum>;
-
-export { NumberSchemaError, NumberSchemaErrorEnum };
+export { NumberSchemaErrors };

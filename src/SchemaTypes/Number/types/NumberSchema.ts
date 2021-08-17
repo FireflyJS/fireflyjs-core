@@ -1,6 +1,6 @@
-import BaseSchemaConfig from "../../types/BaseSchema";
+import { Config as BaseConfig } from "../../Base";
 
-interface NumberSchemaConfig extends BaseSchemaConfig {
+interface NumberSchemaConfig extends BaseConfig {
   integer?: true;
   min?: number;
   max?: number;

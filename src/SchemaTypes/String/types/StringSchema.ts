@@ -1,6 +1,6 @@
-import BaseSchemaConfig from "../../types/BaseSchema";
+import * as BaseSchema from "../../Base";
 
-interface StringSchemaConfig extends BaseSchemaConfig<string> {
+interface StringSchemaConfig extends BaseSchema.Config<string> {
   trim?: true;
   minLength?: number;
   maxLength?: number;

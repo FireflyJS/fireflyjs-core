@@ -1,15 +1,12 @@
-import { DateSchemaConfig } from "../types/DateSchema";
-import {
-  DateSchemaError,
-  DateSchemaErrorEnum as msg,
-} from "../types/DateError";
+import BaseError from "../../types/BaseError";
+import { Errors, Config } from "..";
 import * as check from "./allChecks";
 
 const checkRunner = (
   x: any,
-  config: DateSchemaConfig,
+  config: Config,
   key: string
-): { value: Date; errors: DateSchemaError[] } => {
+): { value: Date; errors: BaseError<Errors>[] } => {
   const {
     greaterThan,
     greaterThanOrEqualTo,
@@ -17,13 +14,13 @@ const checkRunner = (
     lessThanOrEqualTo,
     equalTo,
   } = config;
-  const errors: DateSchemaError[] = [];
+  const errors: BaseError<Errors>[] = [];
 
   //   type check
   if (!check.type(x)) {
     errors.push({
       error: `${key} must be a Date object`,
-      errorType: msg.Type,
+      errorType: Errors.Type,
     });
     return { value: x, errors };
   }
@@ -32,7 +29,7 @@ const checkRunner = (
   if (greaterThan && !check.greaterThan(x, greaterThan)) {
     errors.push({
       error: `${key} must be greater than ${greaterThan}`,
-      errorType: msg.Value,
+      errorType: Errors.Value,
     });
   }
   if (
@@ -41,25 +38,25 @@ const checkRunner = (
   ) {
     errors.push({
       error: `${key} must be greater than or equal to ${greaterThanOrEqualTo}`,
-      errorType: msg.Value,
+      errorType: Errors.Value,
     });
   }
   if (lessThan && !check.lessThan(x, lessThan)) {
     errors.push({
       error: `${key} must be less than ${lessThan}`,
-      errorType: msg.Value,
+      errorType: Errors.Value,
     });
   }
   if (lessThanOrEqualTo && !check.lessThanOrEqual(x, lessThanOrEqualTo)) {
     errors.push({
       error: `${key} must be less than or equal to ${lessThanOrEqualTo}`,
-      errorType: msg.Value,
+      errorType: Errors.Value,
     });
   }
   if (equalTo && !check.equalTo(x, equalTo)) {
     errors.push({
       error: `${key} must be equal to ${equalTo}`,
-      errorType: msg.Value,
+      errorType: Errors.Value,
     });
   }
 

@@ -1,6 +1,6 @@
-import BaseSchemaConfig from "../../types/BaseSchema";
+import { Config as BaseConfig } from "../../Base";
 
-interface DateSchemaConfig extends BaseSchemaConfig<Date> {
+interface DateSchemaConfig extends BaseConfig<Date> {
   greaterThan?: Date;
   greaterThanOrEqualTo?: Date;
   lessThan?: Date;

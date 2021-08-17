@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 import { firestore as __firestore } from "firebase-admin";
 import Document from "../Document/class";
 import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";

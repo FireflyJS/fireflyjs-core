@@ -1,20 +1,17 @@
-import { BooleanSchemaConfig } from "../types/BooleanSchema";
-import {
-  BooleanSchemaError,
-  BooleanSchemaErrorEnum as msg,
-} from "../types/BooleanError";
+import BaseError from "../../types/BaseError";
+import { Errors, Config } from "..";
 import * as check from "./allChecks";
 
 const checkRunner = (
   x: any,
-  config: BooleanSchemaConfig,
+  config: Config,
   key: string
 ): {
   value: boolean;
-  errors: BooleanSchemaError[];
+  errors: BaseError<Errors>[];
 } => {
   const { strict } = config;
-  const errors: BooleanSchemaError[] = [];
+  const errors: BaseError<Errors>[] = [];
 
   let val = x;
   if (!strict) val = Boolean(val);
@@ -23,7 +20,7 @@ const checkRunner = (
   if (!check.type(val)) {
     errors.push({
       error: `${key} must be a boolean`,
-      errorType: msg.Type,
+      errorType: Errors.Type,
     });
     return { value: val, errors };
   }

@@ -1,11 +1,7 @@
-import BaseError from "../../types/BaseError";
-
-enum DateSchemaErrorEnum {
+enum DateSchemaErrors {
   None = "None",
   Type = "Date/Type",
   Value = "Date/InvalidValue",
 }
 
-type DateSchemaError = BaseError<DateSchemaErrorEnum>;
-
-export { DateSchemaError, DateSchemaErrorEnum };
+export { DateSchemaErrors };

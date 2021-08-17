@@ -3,4 +3,4 @@ interface BaseSchemaConfig<T = any> {
   default?: T;
 }
 
-export default BaseSchemaConfig;
+export { BaseSchemaConfig };

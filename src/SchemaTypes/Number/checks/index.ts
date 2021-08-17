@@ -1,23 +1,20 @@
-import { NumberSchemaConfig } from "../types/NumberSchema";
-import {
-  NumberSchemaError,
-  NumberSchemaErrorEnum as msg,
-} from "../types/NumberError";
+import BaseError from "../../types/BaseError";
+import { Errors, Config } from "..";
 import * as check from "./allChecks";
 
 const checkRunner = (
   x: any,
-  config: NumberSchemaConfig,
+  config: Config,
   key: string
-): { value: number; errors: NumberSchemaError[] } => {
+): { value: number; errors: BaseError<Errors>[] } => {
   const { integer, min, max, enum: cEnum } = config;
-  const errors: NumberSchemaError[] = [];
+  const errors: BaseError<Errors>[] = [];
 
   // type check
   if (!check.type(x)) {
     errors.push({
       error: `${key} must be a number`,
-      errorType: msg.Type,
+      errorType: Errors.Type,
     });
     return { value: x, errors };
   }
@@ -26,7 +23,7 @@ const checkRunner = (
   if (integer && !check.integer(x)) {
     errors.push({
       error: `${key} must be an integer`,
-      errorType: msg.Integer,
+      errorType: Errors.Integer,
     });
   }
 
@@ -34,13 +31,13 @@ const checkRunner = (
   if (min && !check.min(x, min)) {
     errors.push({
       error: `minimum allowed value for ${key} is ${min}`,
-      errorType: msg.Value,
+      errorType: Errors.Value,
     });
   }
   if (max && !check.max(x, max)) {
     errors.push({
       error: `maximum allowed value for ${key} is ${max}`,
-      errorType: msg.Value,
+      errorType: Errors.Value,
     });
   }
 
@@ -48,7 +45,7 @@ const checkRunner = (
   if (cEnum && cEnum.length > 0 && !check.enum(x, cEnum)) {
     errors.push({
       error: `${key} is not assignable to specified enum`,
-      errorType: msg.Enum,
+      errorType: Errors.Enum,
     });
   }
 

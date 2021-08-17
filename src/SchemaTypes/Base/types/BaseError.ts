@@ -3,4 +3,4 @@ interface BaseError<T = string> {
   errorType: T;
 }
 
-export default BaseError;
+export { BaseError };
