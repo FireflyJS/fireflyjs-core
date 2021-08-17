@@ -1,6 +1,6 @@
 import { firestore as __firestore } from "firebase-admin";
 import { ObjectSchema, KeyValueStore } from "../SchemaTypes";
-import { Errors } from ".";
+import { Errors, UpdateOptions } from ".";
 import makeError from "../utils/makeError";
 
 class Document<T extends KeyValueStore = any> {
@@ -38,10 +38,7 @@ class Document<T extends KeyValueStore = any> {
 
   public update = async (
     data: Partial<T>,
-    options: {
-      merge: boolean;
-      mergeFields?: string[];
-    } = { merge: true }
+    options: UpdateOptions = { merge: true }
   ) => {
     const { valid, value, errors } = this.__schema.validate(data, undefined, {
       onlySupplied: true,
