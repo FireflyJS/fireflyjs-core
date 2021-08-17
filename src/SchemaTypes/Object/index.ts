@@ -1,4 +1,4 @@
-export { default } from "./class";
+export { default as Class } from "./class";
 export { ObjectSchemaErrors as Errors } from "./types/ObjectError";
 export {
   ObjectSchemaConfig as Config,

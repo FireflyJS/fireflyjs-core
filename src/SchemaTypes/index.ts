@@ -1,14 +1,22 @@
-import StringSchemaType from "./String/class";
-import NumberSchemaType from "./Number/class";
-import BooleanSchemaType from "./Boolean/class";
-import DateSchemaType from "./Date/class";
-import ObjectSchemaType from "./Object/class";
-import { KeyValueStore } from "./Object/types/KeyValue";
+import * as BaseSchema from "./Base";
+import * as StringSchema from "./String";
+import * as NumberSchema from "./Number";
+import * as BooleanSchema from "./Boolean";
+import * as DateSchema from "./Date";
+import * as ObjectSchema from "./Object";
 
-const string = () => new StringSchemaType();
-const number = () => new NumberSchemaType();
-const boolean = () => new BooleanSchemaType();
-const date = () => new DateSchemaType();
-const object = <T extends KeyValueStore = any>() => new ObjectSchemaType<T>();
-
-export { string, number, boolean, date, object };
+export const string = () => new StringSchema.Class();
+export const number = () => new NumberSchema.Class();
+export const boolean = () => new BooleanSchema.Class();
+export const date = () => new DateSchema.Class();
+export const object = <T extends ObjectSchema.KeyValueStore = any>() =>
+  new ObjectSchema.Class<T>();
+export type KeyValueStore = ObjectSchema.KeyValueStore;
+export {
+  BaseSchema,
+  StringSchema,
+  NumberSchema,
+  BooleanSchema,
+  DateSchema,
+  ObjectSchema,
+};

@@ -1,8 +1,8 @@
-import BaseSchemaConfig from "./types/BaseSchema";
+import { BaseSchemaConfig as Config } from "./types/BaseSchema";
 import { ValidateFn } from "./types/ValidateFn";
 
 abstract class SchemaType<T = any> {
-  protected __config: BaseSchemaConfig<T> = {};
+  protected __config: Config<T> = {};
 
   public required = (): this => {
     this.__config.required = true;

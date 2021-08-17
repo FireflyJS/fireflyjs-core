@@ -1,9 +1,8 @@
-import SchemaType from "../class";
-import BaseError from "../types/BaseError";
+import * as BaseSchema from "../Base";
 import { Errors, Config } from ".";
 import checkRunner from "./checks";
 
-class DateSchema extends SchemaType<Date> {
+class DateSchema extends BaseSchema.Class<Date> {
   protected override __config: Config = {};
 
   public greaterThan = (x: Date): this => {
@@ -37,7 +36,7 @@ class DateSchema extends SchemaType<Date> {
   ): {
     value: Date;
     valid: boolean;
-    errors: BaseError<Errors>[];
+    errors: BaseSchema.Errors<Errors>[];
   } => {
     const { value, errors } = checkRunner(x, this.__config, key);
 

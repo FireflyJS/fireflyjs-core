@@ -1,5 +1,5 @@
 import { firestore } from "firebase-admin";
-import BaseError from "./BaseError";
+import { BaseError } from "./BaseError";
 
 type Options = {
   onlySupplied?: boolean;

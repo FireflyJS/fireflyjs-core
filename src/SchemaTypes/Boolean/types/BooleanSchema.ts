@@ -1,6 +1,6 @@
-import BaseSchemaConfig from "../../types/BaseSchema";
+import { Config as BaseConfig } from "../../Base";
 
-interface BooleanSchemaConfig extends BaseSchemaConfig<boolean> {
+interface BooleanSchemaConfig extends BaseConfig<boolean> {
   strict?: true;
 }
 
