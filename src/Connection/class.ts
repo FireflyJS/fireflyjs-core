@@ -12,7 +12,7 @@ class Connection {
   private __modelMap: Map<string, Model> = new Map<string, Model>();
 
   /**
-   * Initializes a new connection class.
+   * Initializes a new connection instance.
    * @constructor
    * @param {__firestore.Firestore} firestore - The Firestore instance to use.
    */
