@@ -16,5 +16,6 @@ module.exports = {
     "import/prefer-default-export": "off",
     "no-useless-escape": "off",
     "no-control-regex": "off",
+    "import/no-cycle": "off",
   },
 };

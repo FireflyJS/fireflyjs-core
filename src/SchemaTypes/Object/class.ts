@@ -1,12 +1,11 @@
 import SchemaType from "../class";
-import { ObjectSchemaConfig, Keys, Pattern } from "./types/ObjectSchema";
-import { KeyValueStore } from "./types/KeyValue";
-import checksRunner from "./checks/checksRunner";
 import BaseError from "../types/BaseError";
+import { KeyValueStore, Config, Keys, Pattern } from ".";
 import { Options } from "../types/ValidateFn";
+import checksRunner from "./checks";
 
 class ObjectSchema<T extends KeyValueStore = any> extends SchemaType<T> {
-  protected override __config: ObjectSchemaConfig<T> = {};
+  protected override __config: Config<T> = {};
 
   get __keys() {
     const configKeys = this.__config.keys;

@@ -1,10 +1,10 @@
 import SchemaType from "../class";
-import { StringSchemaConfig } from "./types/StringSchema";
-import checkRunner from "./checks/checksRunner";
-import { StringSchemaError } from "./types/StringError";
+import BaseError from "../types/BaseError";
+import { Config, Errors } from ".";
+import checkRunner from "./checks";
 
 class StringSchema extends SchemaType<string> {
-  protected override __config: StringSchemaConfig = {};
+  protected override __config: Config = {};
 
   public trim = (): this => {
     this.__config.trim = true;
@@ -51,7 +51,7 @@ class StringSchema extends SchemaType<string> {
   validate = (
     x: any,
     key: string = "value"
-  ): { value: string; valid: boolean; errors: StringSchemaError[] } => {
+  ): { value: string; valid: boolean; errors: BaseError<Errors>[] } => {
     const { value, errors } = checkRunner(x, this.__config, key);
 
     return {

@@ -1,6 +1,4 @@
-import BaseError from "../../types/BaseError";
-
-enum StringSchemaErrorEnum {
+enum StringSchemaErrors {
   None = "None",
   Type = "String/Type",
   Length = "String/Length",
@@ -9,6 +7,4 @@ enum StringSchemaErrorEnum {
   Enum = "String/InvalidValue",
 }
 
-type StringSchemaError = BaseError<StringSchemaErrorEnum>;
-
-export { StringSchemaError, StringSchemaErrorEnum };
+export { StringSchemaErrors };
