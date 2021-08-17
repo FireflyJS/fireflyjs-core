@@ -1,7 +1,7 @@
 enum DocErrorTypes {
-  invalid = "Document/Invalid",
-  firestore = "Document/Firestore",
-  validation = "Document/Validation",
+  Invalid = "Document/Invalid",
+  Firestore = "Document/Firestore",
+  Validation = "Document/Validation",
 }
 
 export { DocErrorTypes };

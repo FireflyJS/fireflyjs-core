@@ -1,9 +1,7 @@
 import { firestore as __firestore } from "firebase-admin";
-import Document from "../Document/class";
-import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
-import ObjectSchema from "../SchemaTypes/Object/class";
-import { ModelErrorTypes as ErrorType } from "./types/error";
-import makeError from "../utils/makeError";
+import Document from "../Document";
+import { KeyValueStore, ObjectSchema } from "../SchemaTypes";
+import { Errors } from ".";
 import Query from "../Query/class";
 import SingleQuery from "../SingleQuery/class";
 import { ConfigPOJO } from "../Query/types/ConfigPOJO";
@@ -11,17 +9,18 @@ import { UpdateConfigPOJO } from "../UpdateQuery/types/ConfigPOJO";
 import UpdateQuery from "../UpdateQuery/class";
 import { UpdateOptions } from "../UpdateQuery/types/UpdateOptions";
 import DeleteQuery from "../DeleteQuery/class";
+import makeError from "../utils/makeError";
 
 class Model<T extends KeyValueStore = any> {
   private __name: string;
 
-  private __schema: ObjectSchema<T>;
+  private __schema: ObjectSchema.Class<T>;
 
   private __db: __firestore.Firestore;
 
   constructor(
     name: string,
-    schema: ObjectSchema<T>,
+    schema: ObjectSchema.Class<T>,
     firestore: __firestore.Firestore
   ) {
     this.__name = name;
@@ -46,14 +45,14 @@ class Model<T extends KeyValueStore = any> {
       onlyKeys: true,
     });
     if (!valid) {
-      throw makeError(ErrorType.validation, errors);
+      throw makeError(Errors.Validation, errors);
     }
 
     const docRef = await this.__db
       .collection(this.__name)
       .add(value)
       .catch((err: Error) => {
-        throw makeError(ErrorType.firestore, err.message);
+        throw makeError(Errors.Firestore, err.message);
       });
 
     return new Document<T>(
