@@ -47,7 +47,7 @@ class Document<T extends KeyValueStore = any> {
       throw makeError(Errors.Validation, errors);
     }
 
-    this.__docRef.set(value, options);
+    await this.__docRef.set(value, options);
   };
 
   public delete = async () => {
