@@ -1,2 +1,2 @@
 export { default } from "./class";
-export { FireflyErrorTypes as FireflyErrors } from "./types/error";
+export { FireflyErrorTypes as Errors } from "./types/error";

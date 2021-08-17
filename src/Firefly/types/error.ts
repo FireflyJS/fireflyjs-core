@@ -1,5 +1,5 @@
 enum FireflyErrorTypes {
-  invalid = "Firefly/Invalid",
+  Invalid = "Firefly/Invalid",
 }
 
 export { FireflyErrorTypes };

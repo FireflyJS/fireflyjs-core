@@ -1,8 +1,7 @@
 import { firestore as __firestore } from "firebase-admin";
 import Model from "../Model";
-import ObjectSchema from "../SchemaTypes/Object/class";
+import { ObjectSchema, KeyValueStore } from "../SchemaTypes";
 import { ModelPOJO } from ".";
-import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
 
 class Connection {
   private __db: __firestore.Firestore;
@@ -36,7 +35,7 @@ class Connection {
 
   public model = <T extends KeyValueStore>(
     name: string,
-    schema: ObjectSchema<T>
+    schema: ObjectSchema.Class<T>
   ): Model<T> => {
     const model = new Model<T>(name, schema, this.__db);
     this.__modelMap.set(name, model);

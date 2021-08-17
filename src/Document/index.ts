@@ -1,5 +1,2 @@
-/* eslint-disable import/no-cycle */
-import Document from "./class";
-import { DocErrorTypes } from "./types/error";
-
-export { Document, DocErrorTypes };
+export { default } from "./class";
+export { DocErrorTypes as Errors } from "./types/error";
