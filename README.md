@@ -1,4 +1,7 @@
 <!-- # fireflyjs-core -->
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- [![LinkedIn][linkedin-shield]][linkedin-url] -->
 
@@ -114,3 +117,23 @@ Contributions are what make the open source community such an amazing place to b
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 <!-- [linkedin-url]: https://linkedin.com/in/othneildrew -->
 [product-screenshot]: https://user-images.githubusercontent.com/51146347/130316345-b68999ff-8eb5-4620-bf04-bc9eef91e2c6.png
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://aniket.codes/"><img src="https://avatars.githubusercontent.com/u/51146347?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Aniket Biswas</b></sub></a><br /><a href="https://github.com/FireflyJS/fireflyjs-core/commits?author=aniketbiswas21" title="Code">💻</a> <a href="https://github.com/FireflyJS/fireflyjs-core/commits?author=aniketbiswas21" title="Documentation">📖</a> <a href="#maintenance-aniketbiswas21" title="Maintenance">🚧</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
