@@ -1,8 +1,7 @@
-/* eslint-disable import/no-cycle */
 import { firestore as __firestore } from "firebase-admin";
 import buildQuery from "../Query/utils/buildQuery";
 import makeError from "../utils/makeError";
-import { Document } from "../Document";
+import Document from "../Document";
 import ObjectSchema from "../SchemaTypes/Object/class";
 import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
 import {

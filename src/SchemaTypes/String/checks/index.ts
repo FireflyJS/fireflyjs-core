@@ -1,4 +1,4 @@
-import BaseError from "../../types/BaseError";
+import { Errors as BaseErrors } from "../../Base";
 import { Errors, Config } from "..";
 import * as check from "./allChecks";
 
@@ -6,7 +6,7 @@ const checkRunner = (
   x: any,
   config: Config,
   key: string
-): { value: string; errors: BaseError<Errors>[] } => {
+): { value: string; errors: BaseErrors<Errors>[] } => {
   const {
     trim,
     minLength,
@@ -16,7 +16,7 @@ const checkRunner = (
     regex,
     enum: cEnum,
   } = config;
-  const errors: BaseError<Errors>[] = [];
+  const errors: BaseErrors<Errors>[] = [];
 
   // type check
   if (!check.type(x)) {

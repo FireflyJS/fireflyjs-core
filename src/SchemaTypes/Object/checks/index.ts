@@ -1,18 +1,20 @@
-import SchemaType from "../../class";
-import BaseError from "../../types/BaseError";
+import {
+  Class as SchemaType,
+  Errors as BaseErrors,
+  ValidationOptions,
+} from "../../Base";
 import { Errors, Config, KeyValueStore } from "..";
 import { CheckReturn } from "./type";
-import { Options } from "../../types/ValidateFn";
 import * as check from "./allChecks";
 
 const checksRunner = <T extends KeyValueStore = any>(
   x: any,
   config: Config<T>,
   key: string,
-  options: NonNullable<Options>
+  options: NonNullable<ValidationOptions>
 ): {
   value: Partial<T>;
-  errors: BaseError[];
+  errors: BaseErrors[];
 } => {
   const { keys: configKeys, pattern: configPattern } = config;
 
@@ -28,7 +30,7 @@ const checksRunner = <T extends KeyValueStore = any>(
     };
 
   const transformed: Partial<T> = {};
-  const errors: BaseError[] = [];
+  const errors: BaseErrors[] = [];
 
   const requiredKeys = new Map<keyof T, SchemaType>();
   const defaultKeys = new Map<keyof T, any>();
