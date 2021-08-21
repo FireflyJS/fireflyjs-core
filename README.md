@@ -30,7 +30,7 @@
 <!-- [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://shields.io/) -->
 
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/Saurav-Shrivastav/covaccinate/blob/master/.pre-commit-config.yaml)
-[![License](https://img.shields.io/github/license/FireflyJS/fireflyjs-core)](https://github.com/FireflyJS/fireflyjs-core/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/FireflyJS/fireflyjs-core)](https://github.com/FireflyJS/fireflyjs-core/blob/main/LICENSE)
 ![GitHub contributors](https://img.shields.io/github/contributors/FireflyJS/fireflyjs-core?logo=github)
 
 <!-- TABLE OF CONTENTS -->
