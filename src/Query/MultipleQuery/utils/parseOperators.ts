@@ -1,6 +1,6 @@
 import { firestore as __firestore } from "firebase-admin";
-import { ConfigPOJO } from "src/SingleQuery/types/ConfigPOJO";
-import { KeyValueStore } from "../../SchemaTypes/Object/types/KeyValue";
+import { ConfigPOJO } from "src/Query/SingleQuery/types/ConfigPOJO";
+import { KeyValueStore } from "../../../SchemaTypes/Object/types/KeyValue";
 import { Operators } from "../types/ConfigPOJO";
 import convertDate from "./convertDate";
 

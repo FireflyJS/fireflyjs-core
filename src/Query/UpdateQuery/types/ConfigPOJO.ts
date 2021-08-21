@@ -1,4 +1,4 @@
-import { KeyValueStore } from "../../SchemaTypes/Object/types/KeyValue";
+import { KeyValueStore } from "../../../SchemaTypes/Object/types/KeyValue";
 
 type OperatorValues = string | number | boolean | null | Date;
 
@@ -18,12 +18,8 @@ type ConfigPOJO<T extends KeyValueStore> = {
   [k in keyof T]?: Partial<T[k]> | Operators;
 };
 
-type ExtConfigPOJO = {
-  limit?: number;
-  offset?: number;
-  startAt?: number;
-  orderBy?: string[];
-  select?: string[];
+type UpdateConfigPOJO<T extends KeyValueStore> = {
+  [k in keyof T]?: T[k];
 };
 
-export { ConfigPOJO, ExtConfigPOJO, Operators, OperatorValues };
+export { ConfigPOJO, UpdateConfigPOJO, Operators, OperatorValues };
