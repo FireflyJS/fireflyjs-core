@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 import Query from "./class";
 import {
   ConfigPOJO,

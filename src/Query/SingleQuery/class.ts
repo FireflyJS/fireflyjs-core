@@ -1,14 +1,14 @@
-/* eslint-disable import/no-cycle */
 import { firestore as __firestore } from "firebase-admin";
-import ObjectSchema from "../SchemaTypes/Object/class";
-import Document from "../Document";
-import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
-import { ConfigPOJO, ExtConfigPOJO, SingleQueryErrorTypes } from "./index";
-import makeError from "../utils/makeError";
+import ObjectSchema from "../../SchemaTypes/Object/class";
+import Document from "../../Document";
+import { KeyValueStore } from "../../SchemaTypes/Object/types/KeyValue";
+import { ExtConfigPOJO, SingleQueryErrorTypes } from "./index";
+import makeError from "../../utils/makeError";
 import buildExtendedQuery from "./utils/buildExtendedQuery";
+import { QueryConfigPOJO } from "../MultipleQuery/types/ConfigPOJO";
 
 class SingleQuery<T extends KeyValueStore> {
-  private __config: ConfigPOJO<T>;
+  private __config: QueryConfigPOJO<T>;
 
   private __extConfig: ExtConfigPOJO;
 
@@ -19,7 +19,7 @@ class SingleQuery<T extends KeyValueStore> {
   private __schema: ObjectSchema<T>;
 
   constructor(
-    input: ConfigPOJO<T>,
+    input: QueryConfigPOJO<T>,
     collectionRef: __firestore.CollectionReference,
     schema: ObjectSchema<T>,
     queryById: boolean = false
@@ -44,10 +44,10 @@ class SingleQuery<T extends KeyValueStore> {
 
     if (
       this.__queryById &&
-      this.__config["_id"] &&
-      typeof this.__config["_id"] === "string"
+      this.__config._id &&
+      typeof this.__config._id === "string"
     ) {
-      const docRef = this.__collectionRef.doc(this.__config["_id"]);
+      const docRef = this.__collectionRef.doc(this.__config._id);
 
       return new Document<T>(
         docRef as __firestore.DocumentReference<T>,
@@ -58,7 +58,7 @@ class SingleQuery<T extends KeyValueStore> {
     let query: __firestore.CollectionReference | __firestore.Query =
       this.__collectionRef;
     Object.keys(this.__config).forEach((k: string) => {
-      const key = k as keyof ConfigPOJO<T>;
+      const key = k as keyof QueryConfigPOJO<T>;
       query = query.where(key.toString(), "==", this.__config[key]);
     });
 

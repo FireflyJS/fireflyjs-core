@@ -2,13 +2,16 @@ import { firestore as __firestore } from "firebase-admin";
 import Document from "../Document";
 import { KeyValueStore, ObjectSchema } from "../SchemaTypes";
 import { Errors } from ".";
-import Query from "../Query/class";
-import SingleQuery from "../SingleQuery/class";
-import { ConfigPOJO } from "../Query/types/ConfigPOJO";
-import { UpdateConfigPOJO } from "../UpdateQuery/types/ConfigPOJO";
-import UpdateQuery from "../UpdateQuery/class";
-import { UpdateOptions } from "../UpdateQuery/types/UpdateOptions";
-import DeleteQuery from "../DeleteQuery/class";
+import Query from "../Query/MultipleQuery/class";
+import SingleQuery from "../Query/SingleQuery/class";
+import {
+  ConfigPOJO,
+  QueryConfigPOJO,
+} from "../Query/MultipleQuery/types/ConfigPOJO";
+import { UpdateConfigPOJO } from "../Query/UpdateQuery/types/ConfigPOJO";
+import UpdateQuery from "../Query/UpdateQuery/class";
+import { UpdateOptions } from "../Query/UpdateQuery/types/UpdateOptions";
+import DeleteQuery from "../Query/DeleteQuery/class";
 import makeError from "../utils/makeError";
 
 class Model<T extends KeyValueStore = any> {
@@ -64,12 +67,10 @@ class Model<T extends KeyValueStore = any> {
   public findById = (id: string) => {
     const collectionRef = this.__db.collection(this.__name);
 
-    // @ts-ignore
-    const config: ConfigPOJO<T> = {
+    const config: QueryConfigPOJO<T> = {
       _id: id,
     };
 
-    // @ts-ignore
     return new SingleQuery<T>(config, collectionRef, this.__schema, true);
   };
 
@@ -82,7 +83,6 @@ class Model<T extends KeyValueStore = any> {
   public findOne = (query: ConfigPOJO<T>) => {
     const collectionRef = this.__db.collection(this.__name);
 
-    // @ts-ignore
     return new SingleQuery<T>(query, collectionRef, this.__schema, false);
   };
 
@@ -110,8 +110,7 @@ class Model<T extends KeyValueStore = any> {
   ) => {
     const collectionRef = this.__db.collection(this.__name);
 
-    // @ts-ignore
-    const config: ConfigPOJO<T> = {
+    const config: QueryConfigPOJO<T> = {
       _id: id,
     };
 
@@ -128,8 +127,7 @@ class Model<T extends KeyValueStore = any> {
   public findByIdAndDelete = (id: string) => {
     const collectionRef = this.__db.collection(this.__name);
 
-    // @ts-ignore
-    const config: ConfigPOJO<T> = {
+    const config: QueryConfigPOJO<T> = {
       _id: id,
     };
 

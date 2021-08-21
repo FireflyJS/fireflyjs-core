@@ -1,15 +1,15 @@
-/* eslint-disable import/no-cycle */
 import { firestore as __firestore } from "firebase-admin";
-import Document from "../Document/class";
-import makeError from "../utils/makeError";
-import ObjectSchema from "../SchemaTypes/Object/class";
-import { ConfigPOJO } from "../Query";
-import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
+import Document from "../../Document/class";
+import makeError from "../../utils/makeError";
+import ObjectSchema from "../../SchemaTypes/Object/class";
+import { ConfigPOJO } from "../MultipleQuery";
+import { KeyValueStore } from "../../SchemaTypes/Object/types/KeyValue";
 import { DeleteQueryErrorTypes } from "./index";
-import buildQuery from "../Query/utils/buildQuery";
+import buildQuery from "../MultipleQuery/utils/buildQuery";
+import { QueryConfigPOJO } from "../MultipleQuery/types/ConfigPOJO";
 
 class DeleteQuery<T extends KeyValueStore> {
-  private __config: ConfigPOJO<T>;
+  private __config: QueryConfigPOJO<T>;
 
   private __queryById: boolean = false;
 
@@ -18,7 +18,7 @@ class DeleteQuery<T extends KeyValueStore> {
   private __schema: ObjectSchema<T>;
 
   constructor(
-    input: ConfigPOJO<T>,
+    input: QueryConfigPOJO<T>,
     collectionRef: __firestore.CollectionReference,
     schema: ObjectSchema<T>,
     queryById: boolean = false
@@ -42,15 +42,17 @@ class DeleteQuery<T extends KeyValueStore> {
 
     if (
       this.__queryById &&
-      this.__config["_id"] &&
-      typeof this.__config["_id"] === "string"
+      this.__config._id &&
+      typeof this.__config._id === "string"
     ) {
-      documentRef = this.__collectionRef.doc(this.__config["_id"]);
+      documentRef = this.__collectionRef.doc(this.__config._id);
     } else {
       query = this.__collectionRef;
 
-      Object.keys(this.__config).forEach((key: keyof ConfigPOJO<T>) => {
-        query = buildQuery<T>(key, this.__config[key], query);
+      Object.keys(this.__config).forEach((k: string) => {
+        const key = k as keyof QueryConfigPOJO<T>;
+
+        query = buildQuery<T>(key, this.__config[key] as ConfigPOJO<T>, query);
       });
 
       const querySnapshot = await query.get();
@@ -67,7 +69,7 @@ class DeleteQuery<T extends KeyValueStore> {
     }
 
     const document = new Document<T>(
-      this.__config["_id"]
+      this.__config._id
         ? documentRef
         : (documentRef.ref as __firestore.DocumentReference<T>),
       this.__schema

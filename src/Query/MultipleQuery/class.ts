@@ -1,11 +1,10 @@
-/* eslint-disable import/no-cycle */
 import { firestore as __firestore } from "firebase-admin";
-import ObjectSchema from "../SchemaTypes/Object/class";
-import Document from "../Document";
-import { KeyValueStore } from "../SchemaTypes/Object/types/KeyValue";
+import ObjectSchema from "../../SchemaTypes/Object/class";
+import Document from "../../Document";
+import { KeyValueStore } from "../../SchemaTypes/Object/types/KeyValue";
 import { ConfigPOJO, ExtConfigPOJO, QueryErrorTypes } from "./index";
 import buildQuery from "./utils/buildQuery";
-import makeError from "../utils/makeError";
+import makeError from "../../utils/makeError";
 import buildExtendedQuery from "./utils/buildExtendedQuery";
 
 class Query<T extends KeyValueStore> {
