@@ -1,7 +1,4 @@
 <!-- # fireflyjs-core -->
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- [![LinkedIn][linkedin-shield]][linkedin-url] -->
 
@@ -34,7 +31,9 @@
 
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/Saurav-Shrivastav/covaccinate/blob/master/.pre-commit-config.yaml)
 [![License](https://img.shields.io/github/license/FireflyJS/fireflyjs-core)](https://github.com/FireflyJS/fireflyjs-core/blob/main/LICENSE)
-![GitHub contributors](https://img.shields.io/github/contributors/FireflyJS/fireflyjs-core?logo=github)
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
@@ -56,6 +55,7 @@
     <li><a href="#documentation">Documentation</a></li>
 <!--     <li><a href="#roadmap">Roadmap</a></li> -->
     <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#contributors">Contributors</a></li>    
 <!--     <li><a href="#license">License</a></li> -->
 <!--     <li><a href="#contact">Contact</a></li> -->
 <!--     <li><a href="#acknowledgements">Acknowledgements</a></li> -->
@@ -118,7 +118,7 @@ Contributions are what make the open source community such an amazing place to b
 <!-- [linkedin-url]: https://linkedin.com/in/othneildrew -->
 [product-screenshot]: https://user-images.githubusercontent.com/51146347/130316345-b68999ff-8eb5-4620-bf04-bc9eef91e2c6.png
 
-## Contributors ✨
+## Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
