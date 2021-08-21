@@ -27,12 +27,16 @@
 
 [![GitHub issues](https://img.shields.io/github/issues/FireflyJS/fireflyjs-core?logo=github)](https://github.com/Saurav-Shrivastav/covaccinate/issues)
 ![Size](https://github-size-badge.herokuapp.com/FireflyJS/fireflyjs-core.svg)
+
 <!-- [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://shields.io/) -->
 
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/Saurav-Shrivastav/covaccinate/blob/master/.pre-commit-config.yaml)
 [![License](https://img.shields.io/github/license/FireflyJS/fireflyjs-core)](https://github.com/FireflyJS/fireflyjs-core/blob/main/LICENSE)
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- TABLE OF CONTENTS -->
@@ -63,6 +67,7 @@
 </details>
 
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
@@ -71,28 +76,34 @@ FireflyJS is an object document model(ODM) library for Firestore. It aims to eas
 
 ### Built With
 
-* [TypeScript](https://www.typescriptlang.org/)
-* [Jest](https://jestjs.io/)
-* [Firebase](https://firebase.google.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Jest](https://jestjs.io/)
+- [Firebase](https://firebase.google.com/)
 
 <!-- FEATURES -->
+
 ## Features
-* Define a schema for your data and add a multitude of operations before adding data to the database.
-* Written completely in TypeScript. Get intelligent intellisense and speed up your development workflow.
-* Easy to pick up, with a syntax inspired from popular libraries like [Mongoose](https://github.com/Automattic/mongoose) and [Yup](https://github.com/jquense/yup).
-* Query data like a pro! With methods like `findById`, `findOne`, etc.
-* Add and update data made easy and safe with proper validation, data transformation according to your defined schema and much more!
+
+- Define a schema for your data and add a multitude of operations before adding data to the database.
+- Written completely in TypeScript. Get intelligent intellisense and speed up your development workflow.
+- Easy to pick up, with a syntax inspired from popular libraries like [Mongoose](https://github.com/Automattic/mongoose) and [Yup](https://github.com/jquense/yup).
+- Query data like a pro! With methods like `findById`, `findOne`, etc.
+- Add and update data made easy and safe with proper validation, data transformation according to your defined schema and much more!
 
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 Coming Soon!
 
 <!-- DOCUMENTATION -->
+
 ## Documentation
+
 Inline documentation for all methods is available in the codebase. Documentation website is in the works. Stay Tuned :)
 
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -102,7 +113,6 @@ Contributions are what make the open source community such an amazing place to b
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
 
 [contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
 [contributors-url]: https://github.com/FireflyJS/fireflyjs-core/graphs/contributors
@@ -115,7 +125,9 @@ Contributions are what make the open source community such an amazing place to b
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
 [license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+
 <!-- [linkedin-url]: https://linkedin.com/in/othneildrew -->
+
 [product-screenshot]: https://user-images.githubusercontent.com/51146347/130316345-b68999ff-8eb5-4620-bf04-bc9eef91e2c6.png
 
 ## Contributors
