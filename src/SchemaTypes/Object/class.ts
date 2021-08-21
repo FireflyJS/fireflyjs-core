@@ -1,7 +1,9 @@
-import SchemaType from "../class";
-import BaseError from "../types/BaseError";
+import {
+  Class as SchemaType,
+  Errors as BaseErrors,
+  ValidationOptions,
+} from "../Base";
 import { KeyValueStore, Config, Keys, Pattern } from ".";
-import { Options } from "../types/ValidateFn";
 import checksRunner from "./checks";
 
 class ObjectSchema<T extends KeyValueStore = any> extends SchemaType<T> {
@@ -28,14 +30,14 @@ class ObjectSchema<T extends KeyValueStore = any> extends SchemaType<T> {
   validate = (
     x: any,
     key: string = "value",
-    options: Options = {
+    options: ValidationOptions = {
       onlySupplied: false,
       onlyKeys: false,
     }
   ): {
     value: Partial<T>;
     valid: boolean;
-    errors: BaseError[];
+    errors: BaseErrors[];
   } => {
     const { value, errors } = checksRunner<T>(x, this.__config, key, options);
 

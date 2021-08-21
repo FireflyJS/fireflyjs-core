@@ -1,4 +1,4 @@
-import BaseError from "../../types/BaseError";
+import { Errors as BaseErrors } from "../../Base";
 import { Errors, Config } from "..";
 import * as check from "./allChecks";
 
@@ -8,10 +8,10 @@ const checkRunner = (
   key: string
 ): {
   value: boolean;
-  errors: BaseError<Errors>[];
+  errors: BaseErrors<Errors>[];
 } => {
   const { strict } = config;
-  const errors: BaseError<Errors>[] = [];
+  const errors: BaseErrors<Errors>[] = [];
 
   let val = x;
   if (!strict) val = Boolean(val);

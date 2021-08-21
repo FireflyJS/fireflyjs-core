@@ -1,13 +1,13 @@
 import { Keys } from "../types/ObjectSchema";
 import { KeyValueStore } from "../types/KeyValue";
 import { CheckReturn } from "./type";
-import { Options } from "../../types/ValidateFn";
+import { ValidationOptions } from "../../Base";
 
 const keyCheck = <T extends KeyValueStore>(
   key: string,
   value: KeyValueStore[string],
   configKeys: Keys<T>,
-  options: Options
+  options: ValidationOptions
 ): CheckReturn => {
   const schema = configKeys[key];
   if (!schema) {

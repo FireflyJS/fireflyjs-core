@@ -1,4 +1,4 @@
-import BaseError from "../../types/BaseError";
+import { Errors as BaseErrors } from "../../Base";
 import { Errors, Config } from "..";
 import * as check from "./allChecks";
 
@@ -6,7 +6,7 @@ const checkRunner = (
   x: any,
   config: Config,
   key: string
-): { value: Date; errors: BaseError<Errors>[] } => {
+): { value: Date; errors: BaseErrors<Errors>[] } => {
   const {
     greaterThan,
     greaterThanOrEqualTo,
@@ -14,7 +14,7 @@ const checkRunner = (
     lessThanOrEqualTo,
     equalTo,
   } = config;
-  const errors: BaseError<Errors>[] = [];
+  const errors: BaseErrors<Errors>[] = [];
 
   //   type check
   if (!check.type(x)) {
