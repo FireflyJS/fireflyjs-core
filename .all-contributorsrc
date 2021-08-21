@@ -15,6 +15,17 @@
         "doc",
         "maintenance"
       ]
+    },
+    {
+      "login": "Aryaman1706",
+      "name": "Aryaman Grover",
+      "avatar_url": "https://avatars.githubusercontent.com/u/56519273?v=4",
+      "profile": "https://github.com/Aryaman1706",
+      "contributions": [
+        "code",
+        "doc",
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 7,

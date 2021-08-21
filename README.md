@@ -1,6 +1,6 @@
 <!-- # fireflyjs-core -->
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- [![LinkedIn][linkedin-shield]][linkedin-url] -->
@@ -128,6 +128,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://aniket.codes/"><img src="https://avatars.githubusercontent.com/u/51146347?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Aniket Biswas</b></sub></a><br /><a href="https://github.com/FireflyJS/fireflyjs-core/commits?author=aniketbiswas21" title="Code">💻</a> <a href="https://github.com/FireflyJS/fireflyjs-core/commits?author=aniketbiswas21" title="Documentation">📖</a> <a href="#maintenance-aniketbiswas21" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/Aryaman1706"><img src="https://avatars.githubusercontent.com/u/56519273?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Aryaman Grover</b></sub></a><br /><a href="https://github.com/FireflyJS/fireflyjs-core/commits?author=Aryaman1706" title="Code">💻</a> <a href="https://github.com/FireflyJS/fireflyjs-core/commits?author=Aryaman1706" title="Documentation">📖</a> <a href="#maintenance-Aryaman1706" title="Maintenance">🚧</a></td>
   </tr>
 </table>
 
