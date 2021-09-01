@@ -1,6 +1,9 @@
+/**
+ * All possible error types in Delete Query operations.
+ */
 enum DeleteQueryErrorTypes {
-  invalid = "DeleteQuery/Invalid",
-  undefined = "DeleteQuery/Undefined",
+  Invalid = "DeleteQuery/Invalid",
+  Undefined = "DeleteQuery/Undefined",
 }
 
 export { DeleteQueryErrorTypes };

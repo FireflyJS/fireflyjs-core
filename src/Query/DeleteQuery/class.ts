@@ -1,12 +1,11 @@
 import { firestore as __firestore } from "firebase-admin";
-import Document from "../../Document/class";
-import makeError from "../../utils/makeError";
-import ObjectSchema from "../../SchemaTypes/Object/class";
+import Document from "../../Document";
+import { ObjectSchema, KeyValueStore } from "../../SchemaTypes";
+import { Errors } from ".";
 import { ConfigPOJO } from "../MultipleQuery";
-import { KeyValueStore } from "../../SchemaTypes/Object/types/KeyValue";
-import { DeleteQueryErrorTypes } from "./index";
-import buildQuery from "../MultipleQuery/utils/buildQuery";
 import { QueryConfigPOJO } from "../MultipleQuery/types/ConfigPOJO";
+import buildQuery from "../MultipleQuery/utils/buildQuery";
+import makeError from "../../utils/makeError";
 
 class DeleteQuery<T extends KeyValueStore> {
   private __config: QueryConfigPOJO<T>;
@@ -15,12 +14,12 @@ class DeleteQuery<T extends KeyValueStore> {
 
   private __collectionRef: __firestore.CollectionReference;
 
-  private __schema: ObjectSchema<T>;
+  private __schema: ObjectSchema.Class<T>;
 
   constructor(
     input: QueryConfigPOJO<T>,
     collectionRef: __firestore.CollectionReference,
-    schema: ObjectSchema<T>,
+    schema: ObjectSchema.Class<T>,
     queryById: boolean = false
   ) {
     this.__config = input;
@@ -31,10 +30,7 @@ class DeleteQuery<T extends KeyValueStore> {
 
   public exec = async () => {
     if (!this.__config) {
-      throw makeError(
-        DeleteQueryErrorTypes.invalid,
-        "Delete Query not configured"
-      );
+      throw makeError(Errors.Invalid, "Delete Query not configured");
     }
 
     let query: __firestore.CollectionReference | __firestore.Query;
@@ -62,10 +58,7 @@ class DeleteQuery<T extends KeyValueStore> {
     }
 
     if (typeof documentRef === "undefined") {
-      throw makeError(
-        DeleteQueryErrorTypes.undefined,
-        "Document reference is undefined"
-      );
+      throw makeError(Errors.Undefined, "Document reference is undefined");
     }
 
     const document = new Document<T>(
