@@ -2,6 +2,7 @@ import { firestore as __firestore } from "firebase-admin";
 import { ObjectSchema, KeyValueStore } from "../SchemaTypes";
 import { Errors, UpdateOptions } from ".";
 import makeError from "../utils/makeError";
+
 /**
  * Class for Firefly document
  */

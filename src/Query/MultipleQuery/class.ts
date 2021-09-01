@@ -6,21 +6,23 @@ import { ConfigPOJO, ExtConfigPOJO, QueryErrorTypes } from "./index";
 import buildQuery from "./utils/buildQuery";
 import makeError from "../../utils/makeError";
 import buildExtendedQuery from "./utils/buildExtendedQuery";
+import BaseQuery from "../Base/class";
 
-class Query<T extends KeyValueStore> {
-  private __config: ConfigPOJO<T>;
+class Query<T extends KeyValueStore> extends BaseQuery<T, ConfigPOJO<T>> {
+  protected __config: ConfigPOJO<T>;
 
   private __extConfig: ExtConfigPOJO;
 
-  private __collectionRef: __firestore.CollectionReference;
+  protected __collectionRef: __firestore.CollectionReference;
 
-  private __schema: ObjectSchema<T>;
+  protected __schema: ObjectSchema<T>;
 
   constructor(
     input: ConfigPOJO<T>,
     collectionRef: __firestore.CollectionReference,
     schema: ObjectSchema<T>
   ) {
+    super();
     this.__config = input;
     this.__extConfig = {};
     this.__collectionRef = collectionRef;

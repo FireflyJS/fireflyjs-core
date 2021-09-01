@@ -1,4 +1,2 @@
-import Query from "./class";
-import { DeleteQueryErrorTypes } from "./types/error";
-
-export { Query, DeleteQueryErrorTypes };
+export { default } from "./class";
+export { DeleteQueryErrorTypes as Errors } from "./types/error";
