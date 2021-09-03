@@ -96,6 +96,8 @@ FireflyJS is an object document model(ODM) library for Firestore. It aims to eas
 
 Coming Soon!
 
+For now, you can refer [__tests__](https://github.com/FireflyJS/fireflyjs-core/tree/main/src/__tests__) for usage and examples as we are still developing the npm package.
+
 <!-- DOCUMENTATION -->
 
 ## Documentation
