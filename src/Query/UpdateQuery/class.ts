@@ -11,9 +11,13 @@ import {
 } from "./index";
 import { ConfigPOJO } from "./types/ConfigPOJO";
 import { QueryConfigPOJO } from "../MultipleQuery/types/ConfigPOJO";
+import BaseQuery from "../Base/class";
 
-class UpdateQuery<T extends KeyValueStore> {
-  private __config: QueryConfigPOJO<T>;
+class UpdateQuery<T extends KeyValueStore> extends BaseQuery<
+  T,
+  QueryConfigPOJO<T>
+> {
+  protected __config: QueryConfigPOJO<T>;
 
   private __updateConfig: UpdateConfigPOJO<T>;
 
@@ -21,9 +25,9 @@ class UpdateQuery<T extends KeyValueStore> {
 
   private __queryById: boolean = false;
 
-  private __collectionRef: __firestore.CollectionReference;
+  protected __collectionRef: __firestore.CollectionReference;
 
-  private __schema: ObjectSchema<T>;
+  protected __schema: ObjectSchema<T>;
 
   constructor(
     input: QueryConfigPOJO<T>,
@@ -33,6 +37,7 @@ class UpdateQuery<T extends KeyValueStore> {
     schema: ObjectSchema<T>,
     queryById: boolean = false
   ) {
+    super();
     this.__config = input;
     this.__updateConfig = updateConfig;
     this.__updateOptions = updateOptions;

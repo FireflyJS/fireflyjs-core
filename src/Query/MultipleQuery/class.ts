@@ -8,7 +8,10 @@ import makeError from "../../utils/makeError";
 import buildExtendedQuery from "./utils/buildExtendedQuery";
 import BaseQuery from "../Base/class";
 
-class Query<T extends KeyValueStore> extends BaseQuery<T, ConfigPOJO<T>> {
+class MultipleQuery<T extends KeyValueStore> extends BaseQuery<
+  T,
+  ConfigPOJO<T>
+> {
   protected __config: ConfigPOJO<T>;
 
   private __extConfig: ExtConfigPOJO;
@@ -29,36 +32,64 @@ class Query<T extends KeyValueStore> extends BaseQuery<T, ConfigPOJO<T>> {
     this.__schema = schema;
   }
 
+  /**
+   * limits the number of documents to be returned
+   * @param {number} limit The no of first matching documents to return
+   * @returns {this} returns Multiple Query instance
+   */
   public limit = (limit: number) => {
     this.__extConfig.limit = limit;
 
     return this;
   };
 
+  /**
+   * Specifies the offset of the returned results.
+   * @param {number} offset Offset Number
+   * @returns {this} returns Multiple Query instance
+   */
   public offset = (offset: number) => {
     this.__extConfig.offset = offset;
 
     return this;
   };
 
+  /**
+   * Starts at the provided set of field values relative to the order of the query.
+   * @param {number} value No to startAt relative to the order of the query
+   * @returns {this} returns Multiple Query instance
+   */
   public startAt = (value: number) => {
     this.__extConfig.startAt = value;
 
     return this;
   };
 
+  /**
+   * sorts by the specified field, optionally in descending order instead of ascending.
+   * @param {string[]} fields Comma seperated list of fields to sort by preceded by either '+' or '-' denoting ascending or descending order respectively. If passed none, defaults to ascending order.
+   * @returns {this} returns Multiple Query instance
+   */
   public orderBy = (...fields: string[]) => {
     this.__extConfig.orderBy = fields;
 
     return this;
   };
 
+  /**
+   * Selects the fields to be included in the final result.
+   * @param fields Comma separated list of fields to include in the final result.
+   * @returns {this} returns Multiple Query instance
+   */
   public select = (...fields: string[]) => {
     this.__extConfig.select = fields;
 
     return this;
   };
 
+  /**
+   * @returns {Promise<Document<T>[]>} returns a promise that resolves to an array of documents
+   */
   public exec = async (): Promise<Document<T>[]> => {
     if (!this.__config) {
       throw makeError(QueryErrorTypes.invalid, "Query not configured.");
@@ -90,4 +121,4 @@ class Query<T extends KeyValueStore> extends BaseQuery<T, ConfigPOJO<T>> {
   };
 }
 
-export default Query;
+export default MultipleQuery;
