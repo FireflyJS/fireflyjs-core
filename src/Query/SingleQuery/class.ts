@@ -6,17 +6,21 @@ import { ExtConfigPOJO, SingleQueryErrorTypes } from "./index";
 import makeError from "../../utils/makeError";
 import buildExtendedQuery from "./utils/buildExtendedQuery";
 import { QueryConfigPOJO } from "../MultipleQuery/types/ConfigPOJO";
+import BaseQuery from "../Base/class";
 
-class SingleQuery<T extends KeyValueStore> {
-  private __config: QueryConfigPOJO<T>;
+class SingleQuery<T extends KeyValueStore> extends BaseQuery<
+  T,
+  QueryConfigPOJO<T>
+> {
+  protected __config: QueryConfigPOJO<T>;
 
   private __extConfig: ExtConfigPOJO;
 
   private __queryById: boolean = false;
 
-  private __collectionRef: __firestore.CollectionReference;
+  protected __collectionRef: __firestore.CollectionReference;
 
-  private __schema: ObjectSchema<T>;
+  protected __schema: ObjectSchema<T>;
 
   constructor(
     input: QueryConfigPOJO<T>,
@@ -24,6 +28,7 @@ class SingleQuery<T extends KeyValueStore> {
     schema: ObjectSchema<T>,
     queryById: boolean = false
   ) {
+    super();
     this.__config = input;
     this.__extConfig = {};
     this.__collectionRef = collectionRef;
@@ -31,12 +36,20 @@ class SingleQuery<T extends KeyValueStore> {
     this.__queryById = queryById;
   }
 
+  /**
+   * Selects the fields to be included in the final result.
+   * @param fields Comma separated list of fields to include in the final result.
+   * @returns {this} returns Single Query instance
+   */
   public select = (...fields: string[]) => {
     this.__extConfig.select = fields;
 
     return this;
   };
 
+  /**
+   * @returns {Promise<Document<T>>} returns a promise that resolves to a single document
+   */
   public exec = async (): Promise<Document<T>> => {
     if (!this.__config) {
       throw new Error("Query not configured");

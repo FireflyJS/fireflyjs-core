@@ -6,15 +6,19 @@ import { ConfigPOJO } from "../MultipleQuery";
 import { QueryConfigPOJO } from "../MultipleQuery/types/ConfigPOJO";
 import buildQuery from "../MultipleQuery/utils/buildQuery";
 import makeError from "../../utils/makeError";
+import BaseQuery from "../Base/class";
 
-class DeleteQuery<T extends KeyValueStore> {
-  private __config: QueryConfigPOJO<T>;
+class DeleteQuery<T extends KeyValueStore> extends BaseQuery<
+  T,
+  QueryConfigPOJO<T>
+> {
+  protected __config: QueryConfigPOJO<T>;
 
   private __queryById: boolean = false;
 
-  private __collectionRef: __firestore.CollectionReference;
+  protected __collectionRef: __firestore.CollectionReference;
 
-  private __schema: ObjectSchema.Class<T>;
+  protected __schema: ObjectSchema.Class<T>;
 
   constructor(
     input: QueryConfigPOJO<T>,
@@ -22,13 +26,17 @@ class DeleteQuery<T extends KeyValueStore> {
     schema: ObjectSchema.Class<T>,
     queryById: boolean = false
   ) {
+    super();
     this.__config = input;
     this.__queryById = queryById;
     this.__collectionRef = collectionRef;
     this.__schema = schema;
   }
 
-  public exec = async () => {
+  /**
+   * @returns {Promise<void>} void
+   */
+  public exec = async (): Promise<void> => {
     if (!this.__config) {
       throw makeError(Errors.Invalid, "Delete Query not configured");
     }
