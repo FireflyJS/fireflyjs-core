@@ -3,7 +3,7 @@ import ObjectSchema from "../../SchemaTypes/Object/class";
 import Document from "../../Document";
 import { KeyValueStore } from "../../SchemaTypes/Object/types/KeyValue";
 import { ConfigPOJO, ExtConfigPOJO, QueryErrorTypes } from "./index";
-import buildQuery from "./utils/buildQuery";
+import buildQuery from "../utils/buildQuery";
 import makeError from "../../utils/makeError";
 import buildExtendedQuery from "./utils/buildExtendedQuery";
 import BaseQuery from "../Base/class";

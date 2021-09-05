@@ -1,5 +1,5 @@
 import { firestore as __firestore } from "firebase-admin";
-import buildQuery from "../MultipleQuery/utils/buildQuery";
+import buildQuery from "../utils/buildQuery";
 import makeError from "../../utils/makeError";
 import Document from "../../Document";
 import ObjectSchema from "../../SchemaTypes/Object/class";

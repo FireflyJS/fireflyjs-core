@@ -1,12 +1,12 @@
 import { firestore as __firestore } from "firebase-admin";
+import BaseQuery from "../Base/class";
 import Document from "../../Document";
 import { ObjectSchema, KeyValueStore } from "../../SchemaTypes";
 import { Errors } from ".";
 import { ConfigPOJO } from "../MultipleQuery";
 import { QueryConfigPOJO } from "../MultipleQuery/types/ConfigPOJO";
-import buildQuery from "../MultipleQuery/utils/buildQuery";
+import buildQuery from "../utils/buildQuery";
 import makeError from "../../utils/makeError";
-import BaseQuery from "../Base/class";
 
 class DeleteQuery<T extends KeyValueStore> extends BaseQuery<
   T,
