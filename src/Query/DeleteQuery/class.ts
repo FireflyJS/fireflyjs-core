@@ -1,27 +1,24 @@
 import { firestore as __firestore } from "firebase-admin";
-import BaseQuery from "../Base/class";
+import BaseQuery, { ConfigPOJOWithId, Errors } from "../Base";
 import Document from "../../Document";
 import { ObjectSchema, KeyValueStore } from "../../SchemaTypes";
-import { Errors } from ".";
-import { ConfigPOJO } from "../MultipleQuery";
-import { QueryConfigPOJO } from "../MultipleQuery/types/ConfigPOJO";
 import buildQuery from "../utils/buildQuery";
 import makeError from "../../utils/makeError";
 
 class DeleteQuery<T extends KeyValueStore> extends BaseQuery<
   T,
-  QueryConfigPOJO<T>
+  ConfigPOJOWithId<T>
 > {
-  protected __config: QueryConfigPOJO<T>;
-
-  private __queryById: boolean = false;
+  protected __config: ConfigPOJOWithId<T>;
 
   protected __collectionRef: __firestore.CollectionReference;
 
   protected __schema: ObjectSchema.Class<T>;
 
+  private __queryById: boolean = false;
+
   constructor(
-    input: QueryConfigPOJO<T>,
+    input: ConfigPOJOWithId<T>,
     collectionRef: __firestore.CollectionReference,
     schema: ObjectSchema.Class<T>,
     queryById: boolean = false
@@ -38,43 +35,42 @@ class DeleteQuery<T extends KeyValueStore> extends BaseQuery<
    */
   public exec = async (): Promise<void> => {
     if (!this.__config) {
-      throw makeError(Errors.Invalid, "Delete Query not configured");
+      throw makeError(Errors.MissingConfig, "Query is not configured.");
     }
 
     let query: __firestore.CollectionReference | __firestore.Query;
-    let documentRef: any;
+    let documentRef: __firestore.DocumentReference<T> | undefined;
 
     if (
       this.__queryById &&
       this.__config._id &&
       typeof this.__config._id === "string"
     ) {
-      documentRef = this.__collectionRef.doc(this.__config._id);
+      documentRef = this.__collectionRef.doc(
+        this.__config._id
+      ) as __firestore.DocumentReference<T>;
     } else {
       query = this.__collectionRef;
 
-      Object.keys(this.__config).forEach((k: string) => {
-        const key = k as keyof QueryConfigPOJO<T>;
+      Object.keys(this.__config).forEach((k) => {
+        const key = k as keyof ConfigPOJOWithId<T>;
 
-        query = buildQuery<T>(key, this.__config[key] as ConfigPOJO<T>, query);
+        if (key !== "_id") {
+          query = buildQuery<T>(key, this.__config[key], query);
+        }
       });
 
       const querySnapshot = await query.get();
 
-      documentRef = querySnapshot
-        .docs[0] as __firestore.QueryDocumentSnapshot<__firestore.DocumentData>;
+      documentRef = querySnapshot.docs[0]
+        ?.ref as __firestore.DocumentReference<T>;
     }
 
     if (typeof documentRef === "undefined") {
-      throw makeError(Errors.Undefined, "Document reference is undefined");
+      throw makeError(Errors.NotFound, "No document found matching the query.");
     }
 
-    const document = new Document<T>(
-      this.__config._id
-        ? documentRef
-        : (documentRef.ref as __firestore.DocumentReference<T>),
-      this.__schema
-    );
+    const document = new Document<T>(documentRef, this.__schema);
 
     await document.delete();
   };
