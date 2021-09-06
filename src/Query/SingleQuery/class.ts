@@ -1,14 +1,17 @@
 import { firestore as __firestore } from "firebase-admin";
-import BaseQuery, { ConfigPOJO, Errors } from "../Base";
-import { ExtConfigPOJO } from ".";
 import Document from "../../Document";
+import BaseQuery, { ConfigPOJOWithId, Errors } from "../Base";
+import { ExtConfigPOJO } from ".";
 import { ObjectSchema, KeyValueStore } from "../../SchemaTypes";
 import { buildExtQuery } from "./utils/buildExtQuery";
 import makeError from "../../utils/makeError";
 import buildQuery from "../utils/buildQuery";
 
-class SingleQuery<T extends KeyValueStore> extends BaseQuery<T, ConfigPOJO<T>> {
-  protected __config: ConfigPOJO<T>;
+class SingleQuery<T extends KeyValueStore> extends BaseQuery<
+  T,
+  ConfigPOJOWithId<T>
+> {
+  protected __config: ConfigPOJOWithId<T>;
 
   protected __collectionRef: __firestore.CollectionReference;
 
@@ -19,7 +22,7 @@ class SingleQuery<T extends KeyValueStore> extends BaseQuery<T, ConfigPOJO<T>> {
   private __queryById: boolean = false;
 
   constructor(
-    input: ConfigPOJO<T>,
+    input: ConfigPOJOWithId<T>,
     collectionRef: __firestore.CollectionReference,
     schema: ObjectSchema.Class<T>,
     queryById: boolean = false
@@ -53,10 +56,10 @@ class SingleQuery<T extends KeyValueStore> extends BaseQuery<T, ConfigPOJO<T>> {
 
     if (
       this.__queryById &&
-      this.__config["_id"] &&
-      typeof this.__config["_id"] === "string"
+      this.__config._id &&
+      typeof this.__config._id === "string"
     ) {
-      const docRef = this.__collectionRef.doc(this.__config["_id"]);
+      const docRef = this.__collectionRef.doc(this.__config._id);
 
       return new Document<T>(
         docRef as __firestore.DocumentReference<T>,
@@ -68,7 +71,10 @@ class SingleQuery<T extends KeyValueStore> extends BaseQuery<T, ConfigPOJO<T>> {
       this.__collectionRef;
 
     Object.keys(this.__config).forEach((k) => {
-      query = buildQuery(k, this.__config[k], query);
+      const key = k as keyof ConfigPOJOWithId<T>;
+      if (key !== "_id") {
+        query = buildQuery(key, this.__config[key], query);
+      }
     });
 
     query = buildExtQuery(query, this.__extConfig);

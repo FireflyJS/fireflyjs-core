@@ -1,12 +1,11 @@
 import { firestore as __firestore } from "firebase-admin";
-import ObjectSchema from "../../SchemaTypes/Object/class";
+import BaseQuery, { ConfigPOJO, Errors } from "../Base";
 import Document from "../../Document";
-import { KeyValueStore } from "../../SchemaTypes/Object/types/KeyValue";
-import { ConfigPOJO, ExtConfigPOJO, QueryErrorTypes } from "./index";
+import { ObjectSchema, KeyValueStore } from "../../SchemaTypes";
+import { ExtConfigPOJO } from ".";
+import { buildExtQuery } from "./utils/buildExtQuery";
 import buildQuery from "../utils/buildQuery";
 import makeError from "../../utils/makeError";
-import buildExtendedQuery from "./utils/buildExtendedQuery";
-import BaseQuery from "../Base/class";
 
 class MultipleQuery<T extends KeyValueStore> extends BaseQuery<
   T,
@@ -14,16 +13,16 @@ class MultipleQuery<T extends KeyValueStore> extends BaseQuery<
 > {
   protected __config: ConfigPOJO<T>;
 
-  private __extConfig: ExtConfigPOJO;
-
   protected __collectionRef: __firestore.CollectionReference;
 
-  protected __schema: ObjectSchema<T>;
+  protected __schema: ObjectSchema.Class<T>;
+
+  private __extConfig: ExtConfigPOJO;
 
   constructor(
     input: ConfigPOJO<T>,
     collectionRef: __firestore.CollectionReference,
-    schema: ObjectSchema<T>
+    schema: ObjectSchema.Class<T>
   ) {
     super();
     this.__config = input;
@@ -92,7 +91,7 @@ class MultipleQuery<T extends KeyValueStore> extends BaseQuery<
    */
   public exec = async (): Promise<Document<T>[]> => {
     if (!this.__config) {
-      throw makeError(QueryErrorTypes.invalid, "Query not configured.");
+      throw makeError(Errors.MissingConfig, "Query is not configured.");
     }
 
     let query: __firestore.CollectionReference | __firestore.Query =
@@ -102,7 +101,7 @@ class MultipleQuery<T extends KeyValueStore> extends BaseQuery<
       query = buildQuery<T>(key, this.__config[key], query);
     });
 
-    query = buildExtendedQuery(query, this.__extConfig);
+    query = buildExtQuery(query, this.__extConfig);
 
     const querySnapshot = await query.get();
 
