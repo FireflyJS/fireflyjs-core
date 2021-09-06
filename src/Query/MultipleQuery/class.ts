@@ -26,9 +26,9 @@ class MultipleQuery<T extends KeyValueStore> extends BaseQuery<
   ) {
     super();
     this.__config = input;
-    this.__extConfig = {};
     this.__collectionRef = collectionRef;
     this.__schema = schema;
+    this.__extConfig = {};
   }
 
   /**

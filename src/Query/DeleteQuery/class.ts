@@ -25,9 +25,9 @@ class DeleteQuery<T extends KeyValueStore> extends BaseQuery<
   ) {
     super();
     this.__config = input;
-    this.__queryById = queryById;
     this.__collectionRef = collectionRef;
     this.__schema = schema;
+    this.__queryById = queryById;
   }
 
   /**

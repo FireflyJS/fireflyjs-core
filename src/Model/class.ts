@@ -10,7 +10,7 @@ import {
 } from "../Query/MultipleQuery/types/ConfigPOJO";
 import { UpdateConfigPOJO } from "../Query/UpdateQuery/types/ConfigPOJO";
 import UpdateQuery from "../Query/UpdateQuery/class";
-import { UpdateOptions } from "../Query/UpdateQuery/types/UpdateOptions";
+import { UpdateOptions } from "../Query/UpdateQuery/types/updateOptions";
 import DeleteQuery from "../Query/DeleteQuery/class";
 import makeError from "../utils/makeError";
 
