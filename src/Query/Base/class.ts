@@ -14,9 +14,9 @@ abstract class BaseQuery<T extends KeyValueStore, K> {
 
   /**
    * Executes the query and returns the result
-   * @returns {Promise<Document<T> | Document<T>[] | void>} The result of the query
+   * @returns {Promise<Document<T> | Document<T>[]> | undefined | void} The result of the query
    */
-  abstract exec: () => Promise<Document<T> | Document<T>[] | void>;
+  abstract exec: () => Promise<Document<T> | Document<T>[] | undefined | void>;
 }
 
 export default BaseQuery;

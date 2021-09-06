@@ -1,7 +1,7 @@
 import { firestore as __firestore } from "firebase-admin";
-import { OperatorValues } from "../types/ConfigPOJO";
+import { Operators } from "../Base";
 
-const convertDate = (value: OperatorValues | OperatorValues[]) => {
+const convertDate = (value: Operators[keyof Operators]) => {
   if (Array.isArray(value)) {
     return value.map((val) =>
       val instanceof Date ? __firestore.Timestamp.fromDate(val) : val

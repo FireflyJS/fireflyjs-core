@@ -1,7 +1,6 @@
 import { firestore as __firestore } from "firebase-admin";
-import { ConfigPOJO } from "src/Query/SingleQuery/types/ConfigPOJO";
-import { KeyValueStore } from "../../../SchemaTypes/Object/types/KeyValue";
-import { Operators } from "../types/ConfigPOJO";
+import { ConfigPOJO, Operators } from "../Base";
+import { KeyValueStore } from "../../SchemaTypes";
 import convertDate from "./convertDate";
 
 const parseOperators = <T extends KeyValueStore>(

@@ -1,5 +1,3 @@
-import { KeyValueStore } from "../../../SchemaTypes/Object/types/KeyValue";
-
 type OperatorValues = string | number | boolean | null | Date;
 
 type Operators = {
@@ -14,12 +12,4 @@ type Operators = {
   $nin?: OperatorValues[];
 };
 
-type ConfigPOJO<T extends KeyValueStore> = {
-  [k in keyof T]?: Partial<T[k]> | Operators;
-};
-
-type UpdateConfigPOJO<T extends KeyValueStore> = {
-  [k in keyof T]?: T[k];
-};
-
-export { ConfigPOJO, UpdateConfigPOJO, Operators, OperatorValues };
+export { Operators };

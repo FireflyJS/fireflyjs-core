@@ -1,38 +1,37 @@
 import { firestore as __firestore } from "firebase-admin";
-import ObjectSchema from "../../SchemaTypes/Object/class";
 import Document from "../../Document";
-import { KeyValueStore } from "../../SchemaTypes/Object/types/KeyValue";
-import { ExtConfigPOJO, SingleQueryErrorTypes } from "./index";
+import BaseQuery, { ConfigPOJOWithId, Errors } from "../Base";
+import { ExtConfigPOJO } from ".";
+import { ObjectSchema, KeyValueStore } from "../../SchemaTypes";
+import { buildExtQuery } from "./utils/buildExtQuery";
 import makeError from "../../utils/makeError";
-import buildExtendedQuery from "./utils/buildExtendedQuery";
-import { QueryConfigPOJO } from "../MultipleQuery/types/ConfigPOJO";
-import BaseQuery from "../Base/class";
+import buildQuery from "../utils/buildQuery";
 
 class SingleQuery<T extends KeyValueStore> extends BaseQuery<
   T,
-  QueryConfigPOJO<T>
+  ConfigPOJOWithId<T>
 > {
-  protected __config: QueryConfigPOJO<T>;
+  protected __config: ConfigPOJOWithId<T>;
+
+  protected __collectionRef: __firestore.CollectionReference;
+
+  protected __schema: ObjectSchema.Class<T>;
 
   private __extConfig: ExtConfigPOJO;
 
   private __queryById: boolean = false;
 
-  protected __collectionRef: __firestore.CollectionReference;
-
-  protected __schema: ObjectSchema<T>;
-
   constructor(
-    input: QueryConfigPOJO<T>,
+    input: ConfigPOJOWithId<T>,
     collectionRef: __firestore.CollectionReference,
-    schema: ObjectSchema<T>,
+    schema: ObjectSchema.Class<T>,
     queryById: boolean = false
   ) {
     super();
     this.__config = input;
-    this.__extConfig = {};
     this.__collectionRef = collectionRef;
     this.__schema = schema;
+    this.__extConfig = {};
     this.__queryById = queryById;
   }
 
@@ -50,9 +49,9 @@ class SingleQuery<T extends KeyValueStore> extends BaseQuery<
   /**
    * @returns {Promise<Document<T>>} returns a promise that resolves to a single document
    */
-  public exec = async (): Promise<Document<T>> => {
+  exec = async (): Promise<Document<T> | undefined> => {
     if (!this.__config) {
-      throw new Error("Query not configured");
+      throw makeError(Errors.MissingConfig, "Query is not configured.");
     }
 
     if (
@@ -71,28 +70,24 @@ class SingleQuery<T extends KeyValueStore> extends BaseQuery<
     let query: __firestore.CollectionReference | __firestore.Query =
       this.__collectionRef;
 
-    Object.keys(this.__config).forEach((k: string) => {
-      const key = k as keyof QueryConfigPOJO<T>;
-      query = query.where(key.toString(), "==", this.__config[key]);
+    Object.keys(this.__config).forEach((k) => {
+      const key = k as keyof ConfigPOJOWithId<T>;
+      if (key !== "_id") {
+        query = buildQuery(key, this.__config[key], query);
+      }
     });
 
-    query = buildExtendedQuery(query, this.__extConfig);
+    query = buildExtQuery(query, this.__extConfig);
 
     const querySnapshot = await query.get();
 
     if (querySnapshot.empty) {
-      throw makeError(
-        SingleQueryErrorTypes.notfound,
-        "Document is invalid or not found"
-      );
+      return undefined;
     }
     const documentRef = querySnapshot.docs[0];
 
     if (typeof documentRef === "undefined") {
-      throw makeError(
-        SingleQueryErrorTypes.undefined,
-        "Document reference is undefined"
-      );
+      return undefined;
     }
 
     return new Document<T>(

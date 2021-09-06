@@ -1,5 +1,3 @@
-import Query from "./class";
-import { ConfigPOJO, ExtConfigPOJO } from "./types/ConfigPOJO";
-import { SingleQueryErrorTypes } from "./types/error";
-
-export { Query, ConfigPOJO, ExtConfigPOJO, SingleQueryErrorTypes };
+export { default } from "./class";
+export { ExtConfigPOJO } from "./types/extConfig";
+export { buildExtQuery } from "./utils/buildExtQuery";
