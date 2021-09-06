@@ -1,13 +1,13 @@
 import { firestore as __firestore } from "firebase-admin";
 import Document from "../Document";
-import UpdateQuery, {
-  UpdateConfigPOJO,
-  UpdateOptions,
-} from "../Query/UpdateQuery";
-import DeleteQuery from "../Query/DeleteQuery";
-import SingleQuery from "../Query/SingleQuery";
-import MultipleQuery from "../Query/MultipleQuery";
-import { ConfigPOJO, ConfigPOJOWithId } from "../Query/Base";
+import {
+  DeleteQuery,
+  MultipleQuery,
+  SingleQuery,
+  UpdateQuery,
+  BaseQueryNs,
+  UpdateQueryNs,
+} from "../Query";
 import { KeyValueStore, ObjectSchema } from "../SchemaTypes";
 import { Errors } from ".";
 import makeError from "../utils/makeError";
@@ -65,29 +65,29 @@ class Model<T extends KeyValueStore = any> {
   public findById = (id: string) => {
     const collectionRef = this.__db.collection(this.__name);
 
-    const config: ConfigPOJOWithId<T> = {
+    const config: BaseQueryNs.ConfigPOJOWithId<T> = {
       _id: id,
     };
 
     return new SingleQuery<T>(config, collectionRef, this.__schema, true);
   };
 
-  public find = (query: ConfigPOJO<T>) => {
+  public find = (query: BaseQueryNs.ConfigPOJO<T>) => {
     const collectionRef = this.__db.collection(this.__name);
 
     return new MultipleQuery<T>(query, collectionRef, this.__schema);
   };
 
-  public findOne = (query: ConfigPOJO<T>) => {
+  public findOne = (query: BaseQueryNs.ConfigPOJO<T>) => {
     const collectionRef = this.__db.collection(this.__name);
 
     return new SingleQuery<T>(query, collectionRef, this.__schema, false);
   };
 
   public findOneAndUpdate = (
-    query: ConfigPOJO<T>,
-    updateQuery: UpdateConfigPOJO<T>,
-    updateOptions: UpdateOptions
+    query: BaseQueryNs.ConfigPOJO<T>,
+    updateQuery: UpdateQueryNs.UpdateConfigPOJO<T>,
+    updateOptions: UpdateQueryNs.UpdateOptions
   ) => {
     const collectionRef = this.__db.collection(this.__name);
 
@@ -103,12 +103,12 @@ class Model<T extends KeyValueStore = any> {
 
   public findByIdAndUpdate = (
     id: string,
-    updateQuery: UpdateConfigPOJO<T>,
-    updateOptions: UpdateOptions
+    updateQuery: UpdateQueryNs.UpdateConfigPOJO<T>,
+    updateOptions: UpdateQueryNs.UpdateOptions
   ) => {
     const collectionRef = this.__db.collection(this.__name);
 
-    const config: ConfigPOJOWithId<T> = {
+    const config: BaseQueryNs.ConfigPOJOWithId<T> = {
       _id: id,
     };
 
@@ -125,14 +125,14 @@ class Model<T extends KeyValueStore = any> {
   public findByIdAndDelete = (id: string) => {
     const collectionRef = this.__db.collection(this.__name);
 
-    const config: ConfigPOJOWithId<T> = {
+    const config: BaseQueryNs.ConfigPOJOWithId<T> = {
       _id: id,
     };
 
     return new DeleteQuery<T>(config, collectionRef, this.__schema, true);
   };
 
-  public findOneAndDelete = (query: ConfigPOJO<T>) => {
+  public findOneAndDelete = (query: BaseQueryNs.ConfigPOJO<T>) => {
     const collectionRef = this.__db.collection(this.__name);
 
     return new DeleteQuery<T>(query, collectionRef, this.__schema, false);
