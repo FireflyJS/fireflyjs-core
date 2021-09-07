@@ -1,8 +1,8 @@
-import * as BaseSchema from "../Base";
+import BaseSchema, { Errors as BaseErrors } from "../Base";
 import { Config, Errors } from ".";
 import checkRunner from "./checks";
 
-class StringSchema extends BaseSchema.Class<string> {
+class StringSchema extends BaseSchema<string> {
   protected override __config: Config = {};
 
   public trim = (): this => {
@@ -50,7 +50,7 @@ class StringSchema extends BaseSchema.Class<string> {
   validate = (
     x: any,
     key: string = "value"
-  ): { value: string; valid: boolean; errors: BaseSchema.Errors<Errors>[] } => {
+  ): { value: string; valid: boolean; errors: BaseErrors<Errors>[] } => {
     const { value, errors } = checkRunner(x, this.__config, key);
 
     return {

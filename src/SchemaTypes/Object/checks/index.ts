@@ -1,5 +1,4 @@
-import {
-  Class as SchemaType,
+import SchemaType, {
   Errors as BaseErrors,
   ValidationOptions,
 } from "../../Base";

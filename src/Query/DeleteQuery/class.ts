@@ -1,5 +1,5 @@
 import { firestore as __firestore } from "firebase-admin";
-import { Class as BaseQuery, ConfigPOJOWithId, Errors } from "../Base";
+import BaseQuery, { ConfigPOJOWithId, Errors } from "../Base";
 import Document from "../../Document";
 import { ObjectSchema, KeyValueStore } from "../../SchemaTypes";
 import buildQuery from "../utils/buildQuery";

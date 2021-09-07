@@ -1,8 +1,8 @@
-import * as BaseSchema from "../Base";
+import BaseSchema, { Errors as BaseErrors } from "../Base";
 import { Errors, Config } from ".";
 import checkRunner from "./checks";
 
-class NumberSchema extends BaseSchema.Class<number> {
+class NumberSchema extends BaseSchema<number> {
   protected override __config: Config = {};
 
   public integer = (): this => {
@@ -31,7 +31,7 @@ class NumberSchema extends BaseSchema.Class<number> {
   ): {
     value: number;
     valid: boolean;
-    errors: BaseSchema.Errors<Errors>[];
+    errors: BaseErrors<Errors>[];
   } => {
     const { value, errors } = checkRunner(x, this.__config, key);
 

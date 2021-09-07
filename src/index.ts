@@ -1,22 +1,24 @@
-import * as FireflyNamespace from "./Firefly";
-import * as ConnectionNamespace from "./Connection";
-import * as ModelNamespace from "./Model";
-import * as DocumentNamespace from "./Document";
+import * as FireflyNs from "./Firefly";
+import * as ConnectionNs from "./Connection";
+import * as SchemaTypes from "./SchemaTypes";
+import * as ModelNs from "./Model";
+import * as QueryNs from "./Query";
 
-const Firefly = FireflyNamespace.default;
+class Firefly extends FireflyNs.default {}
+const firefly = new Firefly();
 
-export default new Firefly();
-export { Firefly };
-export const FireflyErrors = FireflyNamespace.Errors;
+class Connection extends ConnectionNs.default {}
 
-export const Connection = ConnectionNamespace.default;
-export type ModelPOJO = ConnectionNamespace.ModelPOJO;
+class Model<T extends SchemaTypes.KeyValueStore> extends ModelNs.default<T> {}
 
-export * from "./SchemaTypes";
-
-export const Model = ModelNamespace.default;
-export const ModelErrors = ModelNamespace.Errors;
-
-export const Document = DocumentNamespace.default;
-export const DocumentErrors = DocumentNamespace.Errors;
-export type UpdateOptions = DocumentNamespace.UpdateOptions;
+export default firefly;
+export {
+  Firefly,
+  FireflyNs,
+  Connection,
+  ConnectionNs,
+  SchemaTypes,
+  Model,
+  ModelNs,
+  QueryNs,
+};
