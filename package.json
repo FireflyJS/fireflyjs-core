@@ -1,8 +1,8 @@
 {
-  "name": "fireflyjs-core",
-  "version": "1.0.0",
-  "description": "[WIP] ODM for FireStore",
-  "main": "index.js",
+  "name": "@fireflyjs/fireflyjs-core",
+  "version": "0.0.1",
+  "description": "ODM for FireStore",
+  "main": "./lib/index.js",
   "scripts": {
     "prepare": "husky install",
     "compile": "tsc",
@@ -14,15 +14,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Aryaman1706/fireflyjs-core.git"
+    "url": "git+https://github.com/FireflyJS/fireflyjs-core.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Aryaman1706/fireflyjs-core/issues"
+    "url": "https://github.com/FireflyJS/fireflyjs-core/issues"
   },
-  "homepage": "https://github.com/Aryaman1706/fireflyjs-core#readme",
+  "homepage": "https://github.com/FireflyJS/fireflyjs-core#readme",
   "devDependencies": {
     "@types/jest": "^26.0.24",
     "@types/node": "^16.3.1",
@@ -41,5 +41,8 @@
   },
   "dependencies": {
     "firebase-admin": "^9.11.0"
+  },
+  "directories": {
+    "lib": "lib"
   }
 }
