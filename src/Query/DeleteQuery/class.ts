@@ -1,5 +1,5 @@
 import { firestore as __firestore } from "firebase-admin";
-import { Class as BaseQuery, ConfigPOJOWithId, Errors } from "../Base";
+import BaseQuery, { ConfigPOJOWithId, Errors } from "../Base";
 import Document from "../../Document";
 import { ObjectSchema, KeyValueStore } from "../../SchemaTypes";
 import buildQuery from "../utils/buildQuery";
@@ -13,14 +13,14 @@ class DeleteQuery<T extends KeyValueStore> extends BaseQuery<
 
   protected __collectionRef: __firestore.CollectionReference;
 
-  protected __schema: ObjectSchema.Class<T>;
+  protected __schema: ObjectSchema<T>;
 
   private __queryById: boolean = false;
 
   constructor(
     input: ConfigPOJOWithId<T>,
     collectionRef: __firestore.CollectionReference,
-    schema: ObjectSchema.Class<T>,
+    schema: ObjectSchema<T>,
     queryById: boolean = false
   ) {
     super();

@@ -1,5 +1,5 @@
 import { firestore as __firestore } from "firebase-admin";
-import { Class as BaseQuery, ConfigPOJOWithId, Errors } from "../Base";
+import BaseQuery, { ConfigPOJOWithId, Errors } from "../Base";
 import Document from "../../Document";
 import { ObjectSchema, KeyValueStore } from "../../SchemaTypes";
 import { UpdateOptions, UpdateConfigPOJO } from ".";
@@ -14,7 +14,7 @@ class UpdateQuery<T extends KeyValueStore> extends BaseQuery<
 
   protected __collectionRef: __firestore.CollectionReference;
 
-  protected __schema: ObjectSchema.Class<T>;
+  protected __schema: ObjectSchema<T>;
 
   private __updateConfig: UpdateConfigPOJO<T>;
 
@@ -25,7 +25,7 @@ class UpdateQuery<T extends KeyValueStore> extends BaseQuery<
   constructor(
     input: ConfigPOJOWithId<T>,
     collectionRef: __firestore.CollectionReference,
-    schema: ObjectSchema.Class<T>,
+    schema: ObjectSchema<T>,
     updateConfig: UpdateConfigPOJO<T>,
     updateOptions: UpdateOptions,
     queryById: boolean = false

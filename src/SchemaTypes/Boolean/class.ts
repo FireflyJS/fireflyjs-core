@@ -1,8 +1,8 @@
-import * as BaseSchema from "../Base";
+import BaseSchema, { Errors as BaseErrors } from "../Base";
 import { Config, Errors } from ".";
 import checkRunner from "./checks";
 
-class BooleanSchema extends BaseSchema.Class<boolean> {
+class BooleanSchema extends BaseSchema<boolean> {
   protected override __config: Config = {};
 
   public strict(): this {
@@ -16,7 +16,7 @@ class BooleanSchema extends BaseSchema.Class<boolean> {
   ): {
     value: boolean;
     valid: boolean;
-    errors: BaseSchema.Errors<Errors>[];
+    errors: BaseErrors<Errors>[];
   } => {
     const { value, errors } = checkRunner(x, this.__config, key);
 

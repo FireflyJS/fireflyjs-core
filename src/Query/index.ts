@@ -3,12 +3,20 @@ import * as SingleQueryNs from "./SingleQuery";
 import * as MultipleQueryNs from "./MultipleQuery";
 import * as DeleteQueryNs from "./DeleteQuery";
 import * as UpdateQueryNs from "./UpdateQuery";
+import { KeyValueStore } from "../SchemaTypes";
 
-export const BaseQuery = BaseQueryNs.Class;
-export const SingleQuery = SingleQueryNs.Class;
-export const MultipleQuery = MultipleQueryNs.Class;
-export const DeleteQuery = DeleteQueryNs.Class;
-export const UpdateQuery = UpdateQueryNs.Class;
+export class SingleQuery<
+  T extends KeyValueStore
+> extends SingleQueryNs.default<T> {}
+export class MultipleQuery<
+  T extends KeyValueStore
+> extends MultipleQueryNs.default<T> {}
+export class DeleteQuery<
+  T extends KeyValueStore
+> extends DeleteQueryNs.default<T> {}
+export class UpdateQuery<
+  T extends KeyValueStore
+> extends UpdateQueryNs.default<T> {}
 
 export {
   BaseQueryNs,

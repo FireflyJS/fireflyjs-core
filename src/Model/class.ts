@@ -15,13 +15,13 @@ import makeError from "../utils/makeError";
 class Model<T extends KeyValueStore = any> {
   private __name: string;
 
-  private __schema: ObjectSchema.Class<T>;
+  private __schema: ObjectSchema<T>;
 
   private __db: __firestore.Firestore;
 
   constructor(
     name: string,
-    schema: ObjectSchema.Class<T>,
+    schema: ObjectSchema<T>,
     firestore: __firestore.Firestore
   ) {
     this.__name = name;

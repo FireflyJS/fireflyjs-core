@@ -10,7 +10,7 @@ abstract class BaseQuery<T extends KeyValueStore, K> {
 
   protected abstract __collectionRef: __firestore.CollectionReference;
 
-  protected abstract __schema: ObjectSchema.Class<T>;
+  protected abstract __schema: ObjectSchema<T>;
 
   /**
    * Executes the query and returns the result

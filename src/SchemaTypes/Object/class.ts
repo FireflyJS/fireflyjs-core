@@ -1,8 +1,4 @@
-import {
-  Class as SchemaType,
-  Errors as BaseErrors,
-  ValidationOptions,
-} from "../Base";
+import SchemaType, { Errors as BaseErrors, ValidationOptions } from "../Base";
 import { KeyValueStore, Config, Keys, Pattern } from ".";
 import checksRunner from "./checks";
 
