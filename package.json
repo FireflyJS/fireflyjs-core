@@ -1,8 +1,12 @@
 {
-  "name": "@fireflyjs/fireflyjs-core",
-  "version": "0.0.1",
+  "name": "@fireflyjs/base",
+  "version": "0.0.3",
   "description": "ODM for FireStore",
-  "main": "./lib/index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*"
+  ],
   "scripts": {
     "prepare": "husky install",
     "compile": "tsc",
@@ -18,7 +22,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/FireflyJS/fireflyjs-core/issues"
   },
