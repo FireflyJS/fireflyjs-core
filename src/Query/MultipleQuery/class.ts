@@ -15,14 +15,14 @@ class MultipleQuery<T extends KeyValueStore> extends BaseQuery<
 
   protected __collectionRef: __firestore.CollectionReference;
 
-  protected __schema: ObjectSchema.Class<T>;
+  protected __schema: ObjectSchema<T>;
 
   private __extConfig: ExtConfigPOJO;
 
   constructor(
     input: ConfigPOJO<T>,
     collectionRef: __firestore.CollectionReference,
-    schema: ObjectSchema.Class<T>
+    schema: ObjectSchema<T>
   ) {
     super();
     this.__config = input;

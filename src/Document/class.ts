@@ -9,17 +9,17 @@ import makeError from "../utils/makeError";
 class Document<T extends KeyValueStore = any> {
   private __docRef: __firestore.DocumentReference<T>;
 
-  private __schema: ObjectSchema.Class<T>;
+  private __schema: ObjectSchema<T>;
 
   /**
    * Initialize a new Document instance.
    * @constructor
    * @param {__firestore.DocumentReference<T>} docRef - The Firestore document reference.
-   * @param {ObjectSchema.Class<T>} schema - The schema for the document.
+   * @param {ObjectSchema<T>} schema - The schema for the document.
    */
   constructor(
     docRef: __firestore.DocumentReference<T>,
-    schema: ObjectSchema.Class<T>
+    schema: ObjectSchema<T>
   ) {
     this.__docRef = docRef;
     this.__schema = schema;
@@ -27,9 +27,9 @@ class Document<T extends KeyValueStore = any> {
 
   /**
    * returns the document schema
-   * @returns {ObjectSchema.Class<T>} Document Schema
+   * @returns {ObjectSchema<T>} Document Schema
    */
-  get schema(): ObjectSchema.Class<T> {
+  get schema(): ObjectSchema<T> {
     return this.__schema;
   }
 

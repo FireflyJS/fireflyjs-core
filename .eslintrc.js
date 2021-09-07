@@ -17,5 +17,6 @@ module.exports = {
     "no-useless-escape": "off",
     "no-control-regex": "off",
     "import/no-cycle": "off",
+    "max-classes-per-file": "off",
   },
 };

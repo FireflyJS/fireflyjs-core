@@ -62,7 +62,7 @@ class Connection {
    */
   public model = <T extends KeyValueStore>(
     name: string,
-    schema: ObjectSchema.Class<T>
+    schema: ObjectSchema<T>
   ): Model<T> => {
     const model = new Model<T>(name, schema, this.__db);
     this.__modelMap.set(name, model);
