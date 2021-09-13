@@ -1,6 +1,6 @@
 {
-  "name": "@fireflyjs/base",
-  "version": "0.0.3",
+  "name": "@fireflyjs/core",
+  "version": "0.0.5",
   "description": "ODM for FireStore",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
