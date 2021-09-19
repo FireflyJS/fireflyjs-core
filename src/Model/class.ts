@@ -12,6 +12,10 @@ import { KeyValueStore, ObjectSchema } from "../SchemaTypes";
 import { Errors } from ".";
 import makeError from "../utils/makeError";
 
+/**
+ * Class for Firefly Collection Model.
+ * @typeParam T Type defination for Model Schema, must extend {@link KeyValueStore}.
+ */
 class Model<T extends KeyValueStore = any> {
   private __name: string;
 
@@ -19,6 +23,12 @@ class Model<T extends KeyValueStore = any> {
 
   private __db: __firestore.Firestore;
 
+  /**
+   * Intializes a new Model instance.
+   * @param name Name of the Model.
+   * @param schema {@link ObjectSchema} of the Model.
+   * @param firestore {@link __firestore.Firestore | firestore} instance used to initialize Connection.
+   */
   constructor(
     name: string,
     schema: ObjectSchema<T>,
@@ -29,18 +39,35 @@ class Model<T extends KeyValueStore = any> {
     this.__db = firestore;
   }
 
+  /**
+   * Getter for name of the Model.
+   * @returns Name of the Model.
+   */
   get _name() {
     return this.__name;
   }
 
+  /**
+   * Getter for schema of the Model.
+   * @returns Schema of the Model.
+   */
   get _schema() {
     return this.__schema;
   }
 
+  /**
+   * Getter for firestore instance of the Model.
+   * @returns Instance of Firestore used in the Connection.
+   */
   get _db() {
     return this.__db;
   }
 
+  /**
+   *  Create a new Document in the Collection.
+   * @param data Data to add to the {@link Document}.
+   * @returns Newly created {@link Document} instance.
+   */
   public create = async (data: Partial<T>) => {
     const { valid, value, errors } = this.__schema.validate(data, undefined, {
       onlyKeys: true,
@@ -62,6 +89,11 @@ class Model<T extends KeyValueStore = any> {
     );
   };
 
+  /**
+   * Find a Document in the Collection using it's id.
+   * @param id id of the document to find.
+   * @returns Instance of {@link SingleQuery | Query}.
+   */
   public findById = (id: string) => {
     const collectionRef = this.__db.collection(this.__name);
 
@@ -72,17 +104,36 @@ class Model<T extends KeyValueStore = any> {
     return new SingleQuery<T>(config, collectionRef, this.__schema, true);
   };
 
+  /**
+   * Find multiple Documents in the Collection abiding the supplied configuration.
+   * @param query Configuration for the Query.
+   * @returns Instance of {@link MultipleQuery | Query}.
+   */
   public find = (query: BaseQueryNs.ConfigPOJO<T>) => {
     const collectionRef = this.__db.collection(this.__name);
 
     return new MultipleQuery<T>(query, collectionRef, this.__schema);
   };
 
+  /**
+   * Find only one Document abiding the supplied configuration.
+   * In case of multiple Documents, this method would return the first Document that matches.
+   * @param query Configuration for the Query.
+   * @returns Instance of {@link SingleQuery | Query}.
+   */
   public findOne = (query: BaseQueryNs.ConfigPOJO<T>) => {
     const collectionRef = this.__db.collection(this.__name);
 
     return new SingleQuery<T>(query, collectionRef, this.__schema, false);
   };
+
+  /**
+   * Find the document that abides the supplied configuration and update the data stored in the same.
+   * @param query Configuration of Query.
+   * @param updateQuery Data to be stored/updated.
+   * @param updateOptions Options related to the update operation. [Read further](https://googleapis.dev/nodejs/firestore/latest/global.html#SetOptions)
+   * @returns Instance of {@link UpdateQuery}.
+   */
 
   public findOneAndUpdate = (
     query: BaseQueryNs.ConfigPOJO<T>,

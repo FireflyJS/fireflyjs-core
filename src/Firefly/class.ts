@@ -3,17 +3,14 @@ import Connection from "../Connection";
 import { Errors } from ".";
 import makeError from "../utils/makeError";
 
-/**
- * The main entrypoint for establishing a Firefly instance.
- * */
 class Firefly {
   private __dbMap: Map<string, Connection> = new Map<string, Connection>();
 
   /**
    * Establishes a connection to the Firestore database. Can be used to create multiple set of connections.
-   * @param {__firestore.Firestore} firestore - The Firestore instance to use.
-   * @param {dbName} dbName = default  - The name of the connection to use.
-   * @return {Connection} An instance of Firefly Connection.
+   * @param firestore The {@link __firestore | Firestore} instance to use.
+   * @param dbName The name of the connection to use.
+   * @returns An instance of {@link Connection}.
    */
   public createConnection = (
     firestore: __firestore.Firestore,
@@ -26,8 +23,8 @@ class Firefly {
 
   /**
    * Retrieves an instance of Firefly connection to the Firestore database.
-   * @param {dbName} dbName - The name of the connection to retrieve.
-   * @return {Connection} An instance of Firefly Connection.
+   * @param dbName The name of the connection to retrieve.
+   * @returns An instance of {@link Connection}.
    */
   public getConnection = (dbName: string): Connection => {
     const connection: Connection | undefined = this.__dbMap.get(dbName);

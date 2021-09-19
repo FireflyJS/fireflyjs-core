@@ -12,9 +12,8 @@ class Connection {
   private __modelMap: Map<string, Model> = new Map<string, Model>();
 
   /**
-   * Initializes a new connection instance.
-   * @constructor
-   * @param {__firestore.Firestore} firestore - The Firestore instance to use.
+   * Initializes a new Connection instance.
+   * @param firestore The {@link __firestore.Firestore | Firestore} instance to use.
    */
   constructor(firestore: __firestore.Firestore) {
     this.__db = firestore;
@@ -22,7 +21,7 @@ class Connection {
 
   /**
    * returns all the models initialized in this connection.
-   * @returns {ModelPOJO} An object containing all the names of models as key and its instance as value.
+   * @returns An object containing all the names of models as key and its instance as value.
    */
   get models(): ModelPOJO {
     const pojo: ModelPOJO = {};
@@ -35,7 +34,7 @@ class Connection {
 
   /**
    * returns all the models initialized in this connection.
-   * @returns {string[]} An array containing all the names of models.
+   * @returns An array containing all the names of models.
    */
   public modelNames = (): string[] => {
     const keys: string[] = [...this.__modelMap.keys()];
@@ -45,8 +44,8 @@ class Connection {
 
   /**
    * returns an instance of the model corresponding to the provided name
-   * @param {string} name - The name of the model to return.
-   * @returns {Model | undefined} The model instance.
+   * @param name The name of the model to return.
+   * @returns The {@link Model} instance.
    */
   public getModel = (name: string): Model | undefined => {
     const model = this.__modelMap.get(name);
@@ -56,9 +55,10 @@ class Connection {
 
   /**
    * Creates an instance of the model corresponding to the provided name and schema.
-   * @param {string} name - The name of the model to create.
-   * @param {ObjectSchema.Class<T>} schema - The schema to use for the model.
-   * @returns {Model<T>} The model instance.
+   * @typeParam T Type defination of Model schema, must extend {@link KeyValueStore}.
+   * @param name The name of the model to create.
+   * @param schema The schema to use for the model.
+   * @returns The {@link Model | Model} instance.
    */
   public model = <T extends KeyValueStore>(
     name: string,
