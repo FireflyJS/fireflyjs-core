@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx firebase emulators:start --project demo-firefly --import=./sample_data",
-    "add-data": "npx firebase emulators:start --project demo-firefly --export-on-exit=./sample_data"
+    "start": "firebase emulators:start --project demo-firefly --import=./sample_data",
+    "add-data": "firebase emulators:start --project demo-firefly --export-on-exit=./sample_data"
   },
   "keywords": [],
   "author": "",
