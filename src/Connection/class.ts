@@ -14,15 +14,15 @@ class Connection {
   /**
    * Initializes a new connection instance.
    * @constructor
-   * @param {__firestore.Firestore} firestore - The Firestore instance to use.
+   * @param {__firestore.Firestore} firestore - The [Firestore](https://firebase.google.com/docs/reference/node/firebase.firestore.Firestore) instance to use.
    */
   constructor(firestore: __firestore.Firestore) {
     this.__db = firestore;
   }
 
   /**
-   * returns all the models initialized in this connection.
-   * @returns {ModelPOJO} An object containing all the names of models as key and its instance as value.
+   * A getter function that returns all the models registered with this connection.
+   * @returns {ModelPOJO} A javascript POJO(Plain Old Javascript object) model names and their corresponding model instances.
    */
   get models(): ModelPOJO {
     const pojo: ModelPOJO = {};
@@ -34,7 +34,7 @@ class Connection {
   }
 
   /**
-   * returns all the models initialized in this connection.
+   * Returns all the models registered with this connection.
    * @returns {string[]} An array containing all the names of models.
    */
   public modelNames = (): string[] => {
@@ -44,9 +44,9 @@ class Connection {
   };
 
   /**
-   * returns an instance of the model corresponding to the provided name
-   * @param {string} name - The name of the model to return.
-   * @returns {Model | undefined} The model instance.
+   * Returns an instance of the model corresponding to the provided name
+   * @param {string} name - The name of the model.
+   * @returns {Model | undefined} Model instance corresponding to `name`. Returns `undefined` if not present.
    */
   public getModel = (name: string): Model | undefined => {
     const model = this.__modelMap.get(name);
@@ -55,10 +55,11 @@ class Connection {
   };
 
   /**
-   * Creates an instance of the model corresponding to the provided name and schema.
-   * @param {string} name - The name of the model to create.
-   * @param {ObjectSchema.Class<T>} schema - The schema to use for the model.
-   * @returns {Model<T>} The model instance.
+   * Registers a new model with the underlying connection.
+   * @typeParam T - Type defination of the provided schema, must extend {@link KeyValueStore | KeyValueStore}
+   * @param {string} name - Name for the new model. Overwrites the existing model instance under the same name if present.
+   * @param {ObjectSchema.Class<T>} schema - The schema for the new model. This schema would be used to validate data before writing to the database.
+   * @returns {Model<T>} The new model instance.
    */
   public model = <T extends KeyValueStore>(
     name: string,
