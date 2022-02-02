@@ -11,7 +11,7 @@ class Firefly {
 
   /**
    * Establishes a connection to the Firestore database. Can be used to create multiple set of connections.
-   * @param {__firestore.Firestore} firestore - The Firestore instance to use.
+   * @param {__firestore.Firestore} firestore - The [Firestore](https://firebase.google.com/docs/reference/node/firebase.firestore.Firestore) instance to use.
    * @param {dbName} dbName = default  - The name of the connection to use.
    * @return {Connection} An instance of Firefly Connection.
    */
@@ -27,7 +27,7 @@ class Firefly {
   /**
    * Retrieves an instance of Firefly connection to the Firestore database.
    * @param {dbName} dbName - The name of the connection to retrieve.
-   * @return {Connection} An instance of Firefly Connection.
+   * @return {Connection} The instance of Firefly Connection corresponding to `dbName`.
    */
   public getConnection = (dbName: string): Connection => {
     const connection: Connection | undefined = this.__dbMap.get(dbName);
